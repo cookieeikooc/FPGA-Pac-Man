@@ -10,6 +10,7 @@ endmodule
 `define HEIGHT 720
 
 module output_display_array(
+    input []current_block_row,
     output [3:0] r_720p[0:'HEIGHT-1][0:'WIDTH-1],
     output [3:0] g_720p[0:'HEIGHT-1][0:'WIDTH-1],
     output [3:0] b_720p[0:'HEIGHT-1][0:'WIDTH-1]
