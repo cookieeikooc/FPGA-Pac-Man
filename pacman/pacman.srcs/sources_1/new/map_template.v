@@ -6,6 +6,10 @@ module map_template (
     output [11:0] rgb //three 4-bit Hexadecimal numbers
     );
 
+    //########################################################################//
+    //# Map reference from https://www.spriters-resource.com/fullview/52631/ #//
+    //########################################################################//
+
     //Map Template
     reg [5:0] map_block[0:30][0:27];
     initial begin
@@ -3390,8 +3394,9 @@ module map_template (
 
     //need a coordinate transformation
 
-    assign rgb current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b1 ? 12'hFBF :
-            current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b0 ? 4'h000 :
-            map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b1 ? 4'h11F : 4'h000;
+    assign rgb = 
+            current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b1 ? 12'hFBF :
+            current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b0 ? 12'h000 :
+            map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b1 ? 12'h11F : 12'h000;
 
 endmodule
