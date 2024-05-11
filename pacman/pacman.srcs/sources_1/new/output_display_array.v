@@ -13,7 +13,7 @@ module output_display_array (
     reg [3:0] g[0:`HEIGHT-1][0:`WIDTH-1];
     reg [3:0] b[0:`HEIGHT-1][0:`WIDTH-1];
 
-    
+
 
     /*
     for layer assignment
