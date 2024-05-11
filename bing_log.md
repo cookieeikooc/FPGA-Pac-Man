@@ -22,7 +22,7 @@ Every block contains 8 * 8 sub pixel
 ### Color
 Code is in 12-bit Hex
   - Map border color: 11F
-  - 
+  - Gate Color: FBF
   
 
 

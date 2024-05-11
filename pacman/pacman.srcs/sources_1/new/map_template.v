@@ -1,11 +1,9 @@
 module map_template (
     input [7:0]current_block_row,
     input [7:0]current_block_col,
-    input [7:0]current_block_px_row,
-    input [7:0]current_block_px_col,
-    output [3:0] r,
-    output [3:0] g,
-    output [3:0] b
+    input [2:0]current_block_px_row,
+    input [2:0]current_block_px_col,
+    output [11:0] rgb //three 4-bit Hexadecimal numbers
     );
 
     //Map Template
@@ -3379,71 +3377,6 @@ module map_template (
         map_block_px[7][6][37] = 1'b0;
         map_block_px[7][7][37] = 1'b0;
     end
-
-        map_block_px[0][0][] = 1'b0;
-        map_block_px[0][1][] = 1'b0;
-        map_block_px[0][2][] = 1'b0;
-        map_block_px[0][3][] = 1'b0;
-        map_block_px[0][4][] = 1'b0;
-        map_block_px[0][5][] = 1'b0;
-        map_block_px[0][6][] = 1'b0;
-        map_block_px[0][7][] = 1'b0;
-        map_block_px[1][0][] = 1'b0;
-        map_block_px[1][1][] = 1'b0;
-        map_block_px[1][2][] = 1'b0;
-        map_block_px[1][3][] = 1'b0;
-        map_block_px[1][4][] = 1'b0;
-        map_block_px[1][5][] = 1'b0;
-        map_block_px[1][6][] = 1'b0;
-        map_block_px[1][7][] = 1'b0;
-        map_block_px[2][0][] = 1'b0;
-        map_block_px[2][1][] = 1'b0;
-        map_block_px[2][2][] = 1'b0;
-        map_block_px[2][3][] = 1'b0;
-        map_block_px[2][4][] = 1'b0;
-        map_block_px[2][5][] = 1'b0;
-        map_block_px[2][6][] = 1'b0;
-        map_block_px[2][7][] = 1'b0;
-        map_block_px[3][0][] = 1'b0;
-        map_block_px[3][1][] = 1'b0;
-        map_block_px[3][2][] = 1'b0;
-        map_block_px[3][3][] = 1'b0;
-        map_block_px[3][4][] = 1'b0;
-        map_block_px[3][5][] = 1'b0;
-        map_block_px[3][6][] = 1'b0;
-        map_block_px[3][7][] = 1'b0;
-        map_block_px[4][0][] = 1'b0;
-        map_block_px[4][1][] = 1'b0;
-        map_block_px[4][2][] = 1'b0;
-        map_block_px[4][3][] = 1'b0;
-        map_block_px[4][4][] = 1'b0;
-        map_block_px[4][5][] = 1'b0;
-        map_block_px[4][6][] = 1'b0;
-        map_block_px[4][7][] = 1'b0;
-        map_block_px[5][0][] = 1'b0;
-        map_block_px[5][1][] = 1'b0;
-        map_block_px[5][2][] = 1'b0;
-        map_block_px[5][3][] = 1'b0;
-        map_block_px[5][4][] = 1'b0;
-        map_block_px[5][5][] = 1'b0;
-        map_block_px[5][6][] = 1'b0;
-        map_block_px[5][7][] = 1'b0;
-        map_block_px[6][0][] = 1'b0;
-        map_block_px[6][1][] = 1'b0;
-        map_block_px[6][2][] = 1'b0;
-        map_block_px[6][3][] = 1'b0;
-        map_block_px[6][4][] = 1'b0;
-        map_block_px[6][5][] = 1'b0;
-        map_block_px[6][6][] = 1'b0;
-        map_block_px[6][7][] = 1'b0;
-        map_block_px[7][0][] = 1'b0;
-        map_block_px[7][1][] = 1'b0;
-        map_block_px[7][2][] = 1'b0;
-        map_block_px[7][3][] = 1'b0;
-        map_block_px[7][4][] = 1'b0;
-        map_block_px[7][5][] = 1'b0;
-        map_block_px[7][6][] = 1'b0;
-        map_block_px[7][7][] = 1'b0;
     /*
         00: empty       08: ┘           16: ╝           24: ╖           32: │ right
         01: ┌ outer     09: ╔ outer     17: ╔ sharp     25: ╙           33: ═ top
@@ -3454,5 +3387,11 @@ module map_template (
         06: ┐           14: ╗           22: ╕           30: ─ bottom
         07: └           15: ╚           23: ╓           31: │ left
     */
+
+    //need a coordinate transformation
+
+    assign rgb current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b1 ? 12'hFBF :
+            current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b0 ? 4'h000 :
+            map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b1 ? 4'h11F : 4'h000;
 
 endmodule
