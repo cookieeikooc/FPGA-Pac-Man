@@ -1,8 +1,6 @@
 # Log
-> Last update: May 10 2024 01:27. Bing
 
 ## Pixel Mesurement 001
-<sup>May 9 2024</sup>
 ### Size in px
   - Map Hight: 248
   - Map Width: 224
@@ -14,7 +12,6 @@
   - Energizer: 8 * 8
 
 ## Pixel Masurement 002
-<sup>May 10 2024</sup>
 ### Block
 Every block contains 8 * 8 sub pixel
   - Map Hight: 31
