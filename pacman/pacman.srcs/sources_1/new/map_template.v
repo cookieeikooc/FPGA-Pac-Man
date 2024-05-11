@@ -3392,8 +3392,6 @@ module map_template (
         07: └           15: ╚           23: ╓           31: │ left
     */
 
-    //need a coordinate transformation
-
     assign rgb = 
             current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b1 ? 12'hFBF :
             current_block_row == 12 & (current_block_col == 13 | current_block_col == 14) & map_block_px[current_block_px_row][current_block_px_col][map_block[current_block_row][current_block_col]] == 1'b0 ? 12'h000 :
