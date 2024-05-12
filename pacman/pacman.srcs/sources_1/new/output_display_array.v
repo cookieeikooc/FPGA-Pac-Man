@@ -2,8 +2,8 @@
 `define HEIGHT 720
 
 module output_display_array (
-    input [7:0]current_block_row,
-    input [7:0]current_block_col,
+    input [7:0]current_tile_row,
+    input [7:0]current_tile_col,
     output [3:0] r_720p,
     output [3:0] g_720p,
     output [3:0] b_720p

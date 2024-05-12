@@ -13,7 +13,7 @@
 
 ## Pixel Masurement 002
 ### Block
-Every block contains 8 * 8 sub pixel
+Each tile contains 8 * 8 sub pixel
   - Map Hight: 31
   - Map Width: 28
 ### Color
