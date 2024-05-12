@@ -1,1 +1,1 @@
-# FPGA-Pac-man
+# FPGA-Pac-Man
