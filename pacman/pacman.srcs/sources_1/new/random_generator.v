@@ -3,7 +3,7 @@
 module random_generator (
     input clk, //give a positive edge when the random is needed
     input [7:0]current_level, //level of the game, which is 1 to 256
-    output [1:0] random //return a random number of right: 00, down: 01, left: 10, up: 11git 
+    output [1:0] random //return a random number of right: 00, down: 01, left: 10, up: 11
 );
     
     reg [7:0] ROM[0:8191] 
