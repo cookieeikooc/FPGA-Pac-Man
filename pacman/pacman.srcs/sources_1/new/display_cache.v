@@ -9,6 +9,6 @@ Ghost: 14 * 14
 
 module display_template (
     
-    ):
+):
 
 endmodule

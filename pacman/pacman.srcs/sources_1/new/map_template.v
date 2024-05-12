@@ -1,10 +1,12 @@
+//edited by Bing
+
 module map_template (
     input [7:0]current_block_row,
     input [7:0]current_block_col,
     input [2:0]current_block_px_row,
     input [2:0]current_block_px_col,
     output [11:0] rgb //three 4-bit Hexadecimal numbers
-    );
+);
 
     //########################################################################//
     //# Map reference from https://www.spriters-resource.com/fullview/52631/ #//

@@ -7,7 +7,7 @@ module output_display_array (
     output [3:0] r_720p,
     output [3:0] g_720p,
     output [3:0] b_720p
-    );
+);
 
     reg [3:0] r[0:`HEIGHT-1][0:`WIDTH-1];
     reg [3:0] g[0:`HEIGHT-1][0:`WIDTH-1];
