@@ -18,8 +18,17 @@ Each tile contains 8 * 8 sub pixel
   - Map Width: 28
 ### Color
 Code is in 12-bit Hex
-  - Map border color: 11F
-  - Gate Color: FBF
+  ```
+  000 001 010 011 100 101 110 111
+   0   1   2   3   4   5   6   7
+  000 033 071 128 151 183 222 255
+  000 033 071 128 151 183 222 255
+    000     082     173     255
+     0       1       2       3
+  0 1 2 3 4 5 6 7 8 9 A B C D E F
+  ```
+  - 33,33,255: 22F
+  - 255,183,173: FBF
 
 ## Random Generator
 In order to rebuild the original arcade vibes, we need to simulate the random bias of the random function which Pac-Man originally uses, creating the same "random" direction (which is not equally distributed). The ROM is made up with the first 8KB of original arcade version assembly code instructions, which is a 8192 16-bit Hexadecimal array. The index is reset at the start of each level and given the value of the current level (also 16-bit), for each call of the random function, it has a formula of `index = (index*5) + 1`, and modulo by 8192. The value in the ROM then be truncated into 2-bit signal 00, 01, 10, 11, which represent right, down, left and up respectively. The ROM isn't perfectily distributed due to it's nature, original code. The probability of each direction is 25.2%, 28.5%, 29.9%, 16.3% (2064, 2338, 2452, 1338).
