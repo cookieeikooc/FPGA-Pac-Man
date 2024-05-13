@@ -16,7 +16,7 @@ module display_cache (
     output [2:0]current_tile_px_col
 
     //
-):
+);
     reg diplay_720p[0:`HEIGHT-1][0:`WIDTH-1];
 
 endmodule
