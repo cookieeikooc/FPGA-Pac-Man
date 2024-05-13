@@ -10,7 +10,7 @@ module ghost_ROM (
 
     reg [1:0] ROM[0:255][0:7];
     initial begin
-        $readmemh("ghost_up0.mif", ROM[0:255][0]);
+        $readmemh("ghost_ROM.txt", ROM);
     end
 
 endmodule
