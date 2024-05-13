@@ -1,6 +1,6 @@
 //edited by Bing
 
-module map_template (
+module map_ROM (
     input [7:0]current_tile_row,
     input [7:0]current_tile_col,
     input [2:0]current_tile_px_row,
@@ -12,7 +12,7 @@ module map_template (
     //# Map reference from https://www.spriters-resource.com/fullview/52631/ #//
     //########################################################################//
 
-    //Map Template
+    //Map Telmplate
     reg [5:0] map_tile[0:30][0:27];
     initial begin
         //00
@@ -908,7 +908,7 @@ module map_template (
     end
 
     
-    //tile Template
+    //Tile ROM
     reg map_tile_px[0:7][0:7][0:33];
     initial begin
         //00
