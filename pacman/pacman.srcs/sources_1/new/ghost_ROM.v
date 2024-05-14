@@ -9,7 +9,7 @@ module ghost_ROM (
     output [11:0] rgb
 );
 
-    reg [1:0] ROM[0:255][0:7];
+    reg [1:0] ROM[0:2047];
     initial begin
         $readmemh("ghost_ROM.mem", ROM);
     end
@@ -23,9 +23,9 @@ module ghost_ROM (
     end
 
     assign rgb =
-        ROM[{current_tile_row, current_tile_col}][{facing, frame}] == 0 ? 12'h000 :
-        ROM[{current_tile_row, current_tile_col}][{facing, frame}] == 1 ? palette1[ghost] :
-        ROM[{current_tile_row, current_tile_col}][{facing, frame}] == 2 ? 12'h00F :
-        ROM[{current_tile_row, current_tile_col}][{facing, frame}] == 3 ? 12'hDDF : 12'h000;
+        ROM[{facing, frame, current_tile_row, current_tile_col}] == 0 ? 12'h000 :
+        ROM[{facing, frame, current_tile_row, current_tile_col}] == 1 ? palette1[ghost] :
+        ROM[{facing, frame, current_tile_row, current_tile_col}] == 2 ? 12'h00F :
+        ROM[{facing, frame, current_tile_row, current_tile_col}] == 3 ? 12'hDDF : 12'h000;
 
 endmodule
