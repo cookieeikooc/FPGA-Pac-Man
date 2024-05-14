@@ -35,8 +35,8 @@ module map_ROM (
     */
 
     assign rgb = 
-            current_tile_row == 12 & (current_tile_col == 13 | current_tile_col == 14) & map_tile_px[{current_tile_px_row, current_tile_px_col}][map_tile[current_tile_row * 31 + current_tile_col]] == 1'b1 ? 12'hFBF :
-            current_tile_row == 12 & (current_tile_col == 13 | current_tile_col == 14) & map_tile_px[{current_tile_px_row, current_tile_px_col}][map_tile[current_tile_row * 31 + current_tile_col]] == 1'b0 ? 12'h000 :
-            map_tile_px[{current_tile_px_row, current_tile_px_col}][map_tile[current_tile_row * 31 + current_tile_col]] == 1'b1 ? 12'h22F : 12'h000;
+            current_tile_row == 12 & (current_tile_col == 13 | current_tile_col == 14) & map_tile_px[map_tile[current_tile_row * 31 + current_tile_col]][{current_tile_px_row, current_tile_px_col}] == 1'b1 ? 12'hFBF :
+            current_tile_row == 12 & (current_tile_col == 13 | current_tile_col == 14) & map_tile_px[map_tile[current_tile_row * 31 + current_tile_col]][{current_tile_px_row, current_tile_px_col}] == 1'b0 ? 12'h000 :
+            map_tile_px[map_tile[current_tile_row * 31 + current_tile_col]][{current_tile_px_row, current_tile_px_col}] == 1'b1 ? 12'h22F : 12'h000;
 
 endmodule
