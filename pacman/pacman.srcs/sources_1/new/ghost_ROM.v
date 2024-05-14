@@ -1,4 +1,4 @@
-//edited by Bing
+//Bing
 
 module ghost_ROM (
     input [3:0] current_tile_row,

@@ -1,4 +1,4 @@
-// edited by Bing
+//Bing
 
 module random_generator (
     input clk, //give a positive edge when the random is needed

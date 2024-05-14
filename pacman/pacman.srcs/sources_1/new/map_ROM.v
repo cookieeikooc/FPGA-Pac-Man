@@ -1,4 +1,4 @@
-//edited by Bing
+//Bing
 
 module map_ROM (
     input [7:0]current_tile_row,
