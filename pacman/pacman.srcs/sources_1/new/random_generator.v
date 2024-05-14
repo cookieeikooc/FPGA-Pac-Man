@@ -8,7 +8,7 @@ module random_generator (
     
     reg [7:0] ROM[0:8191];
     initial begin
-        $readmemh("random.txt", ROM);
+        $readmemh("random.mem", ROM);
         //this is the 8192 bytes ROM, made up of the assembly code of pac-man chip 6E and 6F
         //assembly code refrence from https://pastebin.com/80zu44Eu
     end
