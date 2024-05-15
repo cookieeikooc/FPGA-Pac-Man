@@ -4,21 +4,23 @@
 `define HEIGHT 720
 
 module board_display_cache (
-    input [7:0]current_px_row,
-    input [7:0]current_px_col,
-    // need to add refesh counter input from VGA module
+    input [7:0]px_row,
+    input [7:0]px_col,
     output [11:0] rgb_720p,
 );
     reg diplay_720p[0:`HEIGHT-1][0:`WIDTH-1];
+    //input wire
+    wire [11:0] map_rgb;
+    wire [11:0] ghost_rgb;
 
+    //layers counter and reset signal
+    //editing...
 
-    //layer counter and assign
+    //mearge all layers
     //editing...
 
 
-    //=======================//
-    //  get map px form ROM  //
-    //=======================//
+    //######## Map ROM ########//
     //output wire
     wire map_count_reset;
     wire map_px_clk_out;
@@ -43,8 +45,6 @@ module board_display_cache (
         .px_row(map_px_row),
         .px_col(map_px_col)
     );
-    //input wire
-    wire [11:0] map_rgb;
     map_ROM (
         .tile_row(decoded_map_tile_row),
         .tile_col(decoded_map_tile_col),
@@ -53,9 +53,7 @@ module board_display_cache (
         .rgb(map_rgb)
     );
 
-    //=========================//
-    //  get ghost px form ROM  //
-    //=========================//
+    //######## Ghost ROM ########//
     //output wire
     wire ghost_count_reset;
     wire ghost_px_clk_out;
@@ -77,8 +75,6 @@ module board_display_cache (
     //assign current_facing =
     //assign current_frame =
     //assign current_ghost =
-    //input wire
-    wire [11:0] ghost_rgb;
     ghost_ROM (
         .tile_px_row(ghost_px_row),
         .tile_px_col(ghost_px_col),
@@ -88,5 +84,8 @@ module board_display_cache (
         .rgb(ghost_rgb)
     );
 
+
+
+    //output
 
 endmodule
