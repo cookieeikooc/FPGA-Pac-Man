@@ -1,8 +1,8 @@
 //Bing
 
 module map_ROM_address_decoder (
-    input count_rst, //high at plx_clk posedge to reset
-    input px_clk,
+    input count_rst, //high at plx_clk negedge to reset
+    input px_clk, //detect negedge and cache will get signal from ROM at posedge
     input [7:0] display_tile_row, //$3B ~ $20
     input [7:0] display_tile_col, //$21 ~ $3F
     output [7:0] tile_row,
@@ -13,7 +13,7 @@ module map_ROM_address_decoder (
 
     reg [2:0] px_r = 3'd0;
     reg [2:0] px_c = 3'd0;
-    always @(posedge px_clk) begin
+    always @(negedge px_clk) begin
         if (count_rst == 1) begin
             px_r <= 3'd0;
             px_c <= 3'd0;

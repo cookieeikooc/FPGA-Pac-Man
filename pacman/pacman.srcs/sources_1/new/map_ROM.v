@@ -8,9 +8,9 @@ module map_ROM (
     output [11:0] rgb //three 4-bit Hexadecimal numbers
 );
 
-    //########################################################################//
-    //# Map reference from https://www.spriters-resource.com/fullview/52631/ #//
-    //########################################################################//
+    //################################################################################//
+    //# Map graphic reference from https://www.spriters-resource.com/fullview/52631/ #//
+    //################################################################################//
 
     //Map Telmplate
     reg [5:0] map_tile[0:867];
