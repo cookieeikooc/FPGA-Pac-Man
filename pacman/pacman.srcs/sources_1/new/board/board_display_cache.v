@@ -53,5 +53,40 @@ module board_display_cache (
         .rgb(map_rgb)
     );
 
+    //=========================//
+    //  get ghost px form ROM  //
+    //=========================//
+    //output wire
+    wire ghost_count_reset;
+    wire ghost_px_clk_out;
+    //assign ghost_count_reset =
+    //assign ghost_px_clk_out =
+    //wiring wire
+    wire [3:0] ghost_px_row;
+    wire [3:0] ghost_px_col;
+    ghost_ROM_address_decoder (
+        .count_rst(ghost_count_reset),
+        .px_clk(ghost_px_clk_out),
+        .px_row(ghost_px_row),
+        .px_col(ghost_px_col)
+    );
+    //output wire
+    wire [1:0] current_facing;
+    wire current_frame;
+    wire [1:0] current_ghost;
+    //assign current_facing =
+    //assign current_frame =
+    //assign current_ghost =
+    //input wire
+    wire [11:0] ghost_rgb;
+    ghost_ROM (
+        .tile_px_row(ghost_px_row),
+        .tile_px_col(ghost_px_col),
+        .facing(current_facing),
+        .frame(current_frame),
+        .ghost(current_ghost),
+        .rgb(ghost_rgb)
+    );
+
 
 endmodule
