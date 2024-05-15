@@ -1,10 +1,10 @@
 //Bing
 
 module map_ROM (
-    input [7:0]current_tile_row,
-    input [7:0]current_tile_col,
-    input [2:0]current_tile_px_row,
-    input [2:0]current_tile_px_col,
+    input [7:0] tile_row,
+    input [7:0] tile_col,
+    input [2:0] tile_px_row,
+    input [2:0] tile_px_col,
     output [11:0] rgb //three 4-bit Hexadecimal numbers
 );
 
@@ -35,8 +35,9 @@ module map_ROM (
     */
 
     assign rgb = 
-            current_tile_row == 12 & (current_tile_col == 13 | current_tile_col == 14) & map_tile_px[map_tile[current_tile_row * 31 + current_tile_col]][{current_tile_px_row, current_tile_px_col}] == 1'b1 ? 12'hFBF :
-            current_tile_row == 12 & (current_tile_col == 13 | current_tile_col == 14) & map_tile_px[map_tile[current_tile_row * 31 + current_tile_col]][{current_tile_px_row, current_tile_px_col}] == 1'b0 ? 12'h000 :
-            map_tile_px[map_tile[current_tile_row * 31 + current_tile_col]][{current_tile_px_row, current_tile_px_col}] == 1'b1 ? 12'h22F : 12'h000;
-
+            tile_row == 12 & (tile_col == 13 | tile_col == 14) & map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}] == 1'b1 ? 12'hFBF :
+            tile_row == 12 & (tile_col == 13 | tile_col == 14) & map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}] == 1'b0 ? 12'h000 :
+            map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}] == 1'b1 ? 12'h22F : 12'h000;
+            //map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}]
+            //map_tile_px[][]
 endmodule
