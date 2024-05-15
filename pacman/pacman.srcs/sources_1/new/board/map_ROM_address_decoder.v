@@ -2,7 +2,7 @@
 
 module map_ROM_address_decoder (
     input count_rst, //high at plx_clk negedge to reset
-    input px_clk, //detect negedge and cache will get signal from ROM at posedge
+    input px_clk, //detect negedge
     input [7:0] display_tile_row, //$3B ~ $20
     input [7:0] display_tile_col, //$21 ~ $3F
     output [7:0] tile_row,
