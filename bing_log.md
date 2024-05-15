@@ -36,6 +36,8 @@ In order to rebuild the original arcade vibes, we need to simulate the random bi
 
 ## ROM
 With data store in ROM, pre-made pixels can be easily get with address decoder.
+### Tiles
+The ROM is store in a form of tiles, getting a tile from the ROM then cast it into display cache
 
 ## Display cache
 Cut the whole display in to three pieces, score, board, level, so that we can combine all cache to create the display memory array for VGA output module.
