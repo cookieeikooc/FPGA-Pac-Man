@@ -1,10 +1,8 @@
 //Bing
 
 module map_ROM_address_decoder (
-    input count_rst, //high at plx_clk negedge to reset
+    input count_rst, //high at px_clk negedge to reset
     input px_clk, //detect negedge
-    input [7:0] display_tile_row, //$3B ~ $20
-    input [7:0] display_tile_col, //$21 ~ $3F
     output [7:0] tile_row,
     output [7:0] tile_col,
     output [2:0] px_row,
@@ -29,8 +27,6 @@ module map_ROM_address_decoder (
         end
     end
 
-    assign tile_row = display_tile_row - 8'h21;
-    assign tile_col = display_tile_col - 8'h3B;
     assign px_row = px_r;
     assign px_col = px_c;
 

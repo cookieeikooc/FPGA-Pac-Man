@@ -1,7 +1,7 @@
 //Bing
 
 module ghost_ROM_address_decoder (
-    input count_rst, //high at plx_clk negedge to reset
+    input count_rst, //high at px_clk negedge to reset
     input px_clk, //detect negedge
     output [3:0] px_row,
     output [3:0] px_col
