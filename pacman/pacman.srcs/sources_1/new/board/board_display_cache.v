@@ -11,6 +11,7 @@ module board_display_cache (
     reg diplay_720p[0:`HEIGHT-1][0:`WIDTH-1];
     //input wire
     wire [11:0] map_rgb;
+    wire [11:0] pacman_rgb;
     wire [11:0] ghost_rgb;
 
     //layers counter and reset signal
@@ -51,6 +52,31 @@ module board_display_cache (
         .tile_px_row(map_px_row),
         .tile_px_col(map_px_col),
         .rgb(map_rgb)
+    );
+
+    //######## PacMan ROM ########//
+    //output wire
+    wire pacman_count_reset;
+    wire pacman_px_clk_out;
+    //assign pacman_count_reset =
+    //assign pacman_px_clk_out =
+    //wiring wire
+    wire [3:0] pacman_px_row;
+    wire [3:0] pacman_px_col;
+    pacman_ROM_address_decoder (
+        .count_rst(pacman_count_reset),
+        .px_clk(pacman_px_clk_out),
+        .px_row(pacman_px_row),
+        .px_col(pacman_px_col)
+    );
+    //output wire
+    wire [4:0] current_frame;
+    //assign current_frame =
+    pacman_ROM (
+        .tile_px_row(pacman_px_row),
+        .tile_px_col(pacman_px_col),
+        .frame(current_frame),
+        .rgb(pacman_rgb)
     );
 
     //######## Ghost ROM ########//
