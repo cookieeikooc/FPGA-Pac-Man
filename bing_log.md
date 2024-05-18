@@ -45,4 +45,15 @@ The ROM is store in a form of tiles, getting a tile from the ROM then cast it in
 ## Display cache 005
 Cut the whole display in to three pieces, score, board, level, so that we can combine all cache to create the display memory array for VGA output module.
 
+## PacMan 006
+
+## Ghost 007
+When the frighten mode is going to end, the ghosts will flash, with the frequency of 4Hz (2 cycles a sec). The flash frame starting is independent to the position of the ghosts and the animation frame, and the animation frame is independent to the position of the ghost, with the frequency of 4Hz.
+
+
+queued:
+
+
+
+
 

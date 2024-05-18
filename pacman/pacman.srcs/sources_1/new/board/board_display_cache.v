@@ -33,6 +33,9 @@ module board_display_cache (
 
     */
 
+    reg pac_count_rst = 1'b0;
+
+
     //State Machine
     parameter READY = 0, MAP = 1, PAC = 2, FRUIT = 3, BLINKY = 4, PINKY = 5, INKY = 6, CLYDE = 7, SCORE = 8;
     reg [1:0] current_state, next_state;
@@ -59,7 +62,7 @@ module board_display_cache (
             end
             PAC: begin
                 if (firght) begin
-                    if (pac_counter_rst) begin
+                    if (pacman_counter_rst) begin
                         next_state <= PAC;
                     end
                     else begin
@@ -72,59 +75,40 @@ module board_display_cache (
             end
         endcase
     end
-    always @(posedge clk) begin
+    always @(negedge clk) begin
         current_state <= next_state;
     end
 
     //ready signal
     assign current_state = READY ? ready = 1'b1 : 1'b0;
 
+
     //ROM Signal
-    reg pac_count_rst = 1'b0;
-    reg [5:0] count_px_8x8 = 6'd0;
-    reg [7:0] count_px_16x16 = 8'd0;
-    reg [4:0] count_tile_row = 5'd0;
-    reg [4:0] count_tile_col = 5'd0;
+    reg [13:0] count_map_px = 'd0;
+    always @(negedge clk) begin
+        if (current_state == MAP & refresh == 1'b0) begin
+            if (count_map_px == 14'd13888) begin
+                count_map_px <= 14'd0;
+            end
+            else begin
+                count_map_px <= count_map_px + 14'd1;
+            end
+        end
+        else begin
+            count_map_px <= 14'd0;
+        end
+    end
+
+
+
+    //Reset Signal
     always @(posedge clk) begin
-        case (current_state)
-            MAP: begin
-                if (count_px == 6'd63) begin
-                    count_px <= 6'd0;
-                    if (count_tile_col == 5'd27) begin
-                        count_tile_col <= 5'd0;
-                        if (count_tile_row == 5'd31) begin
-                            count_tile_row <= 5'd0;
-                            pac_count_rst <= 1'b1;
-                        end
-                        else begin
-                            count_tile_row <= count_tile_row + 5'd1;
-                            pac_count_rst <= 1'b0;
-                        end
-                    end
-                    else begin
-                        count_tile_col <= count_tile_col + 5'd1;
-                    end
-                end
-                else begin
-                    count_px <= count_px + 6'd1;
-                end
-            end
-            PAC: begin
-                //editing...
-            end
-            FRUIT: begin
-                //editing...
-            end
-            BLINKY: begin
-                
-            end
-            default: begin
-                count_px <= 6'd0;
-                count_tile_row <= 5'd0;
-                count_tile_col <= 5'd0;
-                pac_count_rst <= 1'b0;
-            end
-        endcase
+        if (count_map_px == 14'd13888) begin
+            map_count_rst <= 1'b1;
+        end
+        else begin
+            map_count_rst <= 1'b0;
+        end
     end
 
     
@@ -179,19 +163,26 @@ module board_display_cache (
     );
     //output wire
     wire [1:0] current_facing;
+    wire fright_signal;
     wire current_frame;
+    wire curent_flash_frame;
     wire [1:0] current_ghost;
     //assign current_facing =
+    //assign fright_signal =
     //assign current_frame =
-    assign current_ghost = current_state == BLINKY ? 2'd0 :
-                           current_state == PINKY ? 2'd1 :
-                           current_state == INKY ? 2'd2 :
-                           current_state == CLYDE ? 2'd3 : 2'd0;
+    //assign flash_frame =
+    assign current_ghost =
+        current_state == BLINKY ? 2'd0 :
+        current_state == PINKY ? 2'd1 :
+        current_state == INKY ? 2'd2 :
+        current_state == CLYDE ? 2'd3 : 2'd0;
     ghost_ROM (
         .tile_px_row(ghost_px_row),
         .tile_px_col(ghost_px_col),
         .facing(current_facing),
+        .fright(fright_signal),
         .frame(current_frame),
+        .flash_frame(curent_flash_frame),
         .ghost(current_ghost),
         .rgb(ghost_rgb)
     );
