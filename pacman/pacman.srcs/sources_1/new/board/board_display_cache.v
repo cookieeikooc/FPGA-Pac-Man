@@ -8,6 +8,7 @@ module board_display_cache (
     input [7:0]px_row,
     input [7:0]px_col,
     input refresh,
+    input fright,
     output ready,
     output [11:0] rgb_720p,
 
@@ -27,6 +28,11 @@ module board_display_cache (
     //ghost
     //pacman
 
+    /*
+    referesh = map_counter_rst
+
+    */
+
     //State Machine
     parameter READY = 0, MAP = 1, PAC = 2, FRUIT = 3, BLINKY = 4, PINKY = 5, INKY = 6, CLYDE = 7, SCORE = 8;
     reg [1:0] current_state, next_state;
@@ -43,12 +49,22 @@ module board_display_cache (
                     next_state <= READY;
                 end
             end
-            RENDER: begin
-                if (done) begin
-                    next_state <= READY;
+            MAP: begin
+                if (pac_count_rst) begin
+                    next_state <= PAC;
                 end
                 else begin
-                    next_state <= RENDER;
+                    next_state <= MAP;
+                end
+            end
+            PAC: begin
+                if (firght) begin
+                    if (pac_counter_rst) begin
+                        next_state <= PAC;
+                    end
+                    else begin
+                        next_state <= RENDER;
+                    end
                 end
             end
             default: begin
@@ -64,7 +80,7 @@ module board_display_cache (
     assign current_state = READY ? ready = 1'b1 : 1'b0;
 
     //ROM Signal
-    reg map_done = 1'b0;
+    reg pac_count_rst = 1'b0;
     reg [5:0] count_px_8x8 = 6'd0;
     reg [7:0] count_px_16x16 = 8'd0;
     reg [4:0] count_tile_row = 5'd0;
@@ -78,11 +94,11 @@ module board_display_cache (
                         count_tile_col <= 5'd0;
                         if (count_tile_row == 5'd31) begin
                             count_tile_row <= 5'd0;
-                            map_done <= 1'b1;
+                            pac_count_rst <= 1'b1;
                         end
                         else begin
                             count_tile_row <= count_tile_row + 5'd1;
-                            map_done <= 1'b0;
+                            pac_count_rst <= 1'b0;
                         end
                     end
                     else begin
@@ -106,7 +122,7 @@ module board_display_cache (
                 count_px <= 6'd0;
                 count_tile_row <= 5'd0;
                 count_tile_col <= 5'd0;
-                map_done <= 1'b0;
+                pac_count_rst <= 1'b0;
             end
         endcase
     end

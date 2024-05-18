@@ -3,8 +3,6 @@
 module map_ROM_address_decoder (
     input count_rst, //high at px_clk negedge to reset
     input px_clk, //detect negedge
-    output [7:0] tile_row,
-    output [7:0] tile_col,
     output [2:0] px_row,
     output [2:0] px_col
 );
