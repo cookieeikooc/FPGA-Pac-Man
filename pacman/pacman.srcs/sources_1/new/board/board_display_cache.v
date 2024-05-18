@@ -167,7 +167,10 @@ module board_display_cache (
     wire [1:0] current_ghost;
     //assign current_facing =
     //assign current_frame =
-    //assign current_ghost =
+    assign current_ghost = current_state == BLINKY ? 2'd0 :
+                           current_state == PINKY ? 2'd1 :
+                           current_state == INKY ? 2'd2 :
+                           current_state == CLYDE ? 2'd3 : 2'd0;
     ghost_ROM (
         .tile_px_row(ghost_px_row),
         .tile_px_col(ghost_px_col),
@@ -201,7 +204,7 @@ module board_display_cache (
         .frame(current_frame),
         .rgb(pacman_rgb)
     );
-    
+
 
     //output
 
