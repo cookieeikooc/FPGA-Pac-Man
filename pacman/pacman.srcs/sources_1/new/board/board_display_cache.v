@@ -151,7 +151,20 @@ module board_display_cache (
             count_map_px <= 14'd0;
         end
     end
-    //pac editing...
+    reg [13:0] count_pac_px = 14'd0;
+    always @(negedge clk) begin
+        if (current_state == PAC & pac_count_rst == 1'b0) begin
+            if (count_pac_px == 14'd12927) begin
+                count_pac_px <= 14'd0;
+            end
+            else begin
+                count_pac_px <= count_pac_px + 14'd1;
+            end
+        end
+        else begin
+            count_pac_px <= 14'd0;
+        end
+    end
     //fruit editing...
     reg [7:0] count_blinky_px = 8'd0;
     always @(negedge clk) begin
@@ -235,7 +248,14 @@ module board_display_cache (
             pac_count_rst <= 1'b0;
         end
     end
-    //pac editing...
+    always @(posedge clk) begin
+        if (count_pac_px == 14'd12927) begin
+            fruit_count_rst <= 1'b1;
+        end
+        else begin
+            fruit_count_rst <= 1'b0;
+        end
+    end
     //fruit editing...
     always @(posedge clk) begin
         if (count_pacman_px == 8'd255 & fright == 1'b0) begin
@@ -292,26 +312,54 @@ module board_display_cache (
     wire map_count_reset;
     assign map_count_reset = refresh;
     //wiring wire
-    wire [4:0] decoded_map_tile_row;
-    wire [4:0] decoded_map_tile_col;
+    wire [4:0] map_tile_row;
+    wire [4:0] map_tile_col;
     wire [2:0] map_px_row;
     wire [2:0] map_px_col;
     map_ROM_address_decoder (
         .count_rst(map_count_reset),
         .px_clk(clk),
-        .tile_row(decoded_map_tile_row),
-        .tile_col(decoded_map_tile_col),
+        .tile_row(map_tile_row),
+        .tile_col(map_tile_col),
         .px_row(map_px_row),
         .px_col(map_px_col)
     );
     //input wire
     wire [11:0] map_rgb;
     map_ROM (
-        .tile_row(decoded_map_tile_row),
-        .tile_col(decoded_map_tile_col),
+        .tile_row(map_tile_row),
+        .tile_col(map_tile_col),
         .tile_px_row(map_px_row),
         .tile_px_col(map_px_col),
         .rgb(map_rgb)
+    );
+
+    //######## Pac ROM ########//
+    //output wire
+    wire pac_count_reset;
+    assign pac_count_reset = pac_count_rst;
+    //wiring wire
+    wire [2:0] pac_px_row;
+    wire [2:0] pac_px_col;
+    pac_ROM_address_decoder (
+        .count_rst(pac_count_reset),
+        .px_clk(clk),
+        .px_row(pac_px_row),
+        .px_col(pac_px_col)
+    );
+    //output wire
+    wire energizer_bool;
+    wire flash_frame;
+    //assign energizer_bool =
+    //assign flash_frame =
+    //input wire
+    wire [11:0] pac_rgb;
+    pac_ROM (
+        .tile_px_row(pac_px_row),
+        .tile_px_col(pac_px_col),
+        .energizers(energizer_bool),
+        .flash_frame(flash_frame),
+        .rgb(pac_rgb)
     );
 
     //######## Ghost ROM ########//
