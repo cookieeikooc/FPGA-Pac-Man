@@ -1,10 +1,11 @@
 // Bing
 
-module pacman_ROM (input [3:0] tile_px_row,
+module pacman_ROM (
+    input [3:0] tile_px_row,
     input [3:0] tile_px_col,
-    input [4:0]frame, //0: Closed 1: R wide open 2: R open 3: D wide open
-                      //4: D open 5: L wide open 6: L open 7: U wide open
-                      //8: U open 9: Die 1       21: Die 13
+    input [4:0] frame, //0: Closed 1: R wide open 2: R open 3: D wide open
+                       //4: D open 5: L wide open 6: L open 7: U wide open
+                       //8: U open 9: Die 1       21: Die 13
     output [11:0] rgb
 );
 
