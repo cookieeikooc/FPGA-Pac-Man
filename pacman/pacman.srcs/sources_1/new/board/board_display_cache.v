@@ -11,7 +11,7 @@ module board_display_cache (
     input refresh,
     input fright,
     output ready,
-    output [11:0] rgb_720p,
+    output [11:0] rgb_720p
 );
     reg diplay_720p[0:`HEIGHT-1][0:`WIDTH-1];
 
@@ -73,7 +73,7 @@ module board_display_cache (
                 if (pacman_count_rst) begin
                     next_state <= PACMAN;
                 end
-                else if (clyde_counter_rst) begin
+                else if (clyde_count_rst) begin
                     next_state <= CLYDE;
                 end
                 else begin
@@ -126,7 +126,7 @@ module board_display_cache (
                     next_state <= next_state;
                 end
             end
-            SOCORE: begin
+            SCORE: begin
                 if (done) begin
                     next_state <= READY;
                 end
@@ -144,11 +144,11 @@ module board_display_cache (
     end
 
     //ready signal
-    assign current_state = READY ? ready = 1'b1 : 1'b0;
+    assign ready = current_state == READY ? 1'b1 : 1'b0;
 
 
     //ROM Signal
-    reg [13:0] count_map_px = 'd0;
+    reg [13:0] count_map_px = 14'd0;
     always @(negedge clk) begin
         if (current_state == MAP & refresh == 1'b0) begin
             if (count_map_px == 14'd13887) begin
@@ -316,13 +316,14 @@ module board_display_cache (
             score_count_rst <= 1'b0;
         end
     end
+    //score editing...
 
 
     //Ghost Animation Frame
     reg [3:0] counter_ghost_frame = 4'd0;
     reg ghost_frame;
     always @(posedge clk_60 or posedge (blinky_count_rst | pinky_count_rst | inky_count_rst | clyde_count_rst)) begin
-        if (rst) begin
+        if (blinky_count_rst | pinky_count_rst | inky_count_rst | clyde_count_rst) begin
             counter_ghost_frame <= 0;
             ghost_frame <= 0;
         end else begin
@@ -378,7 +379,7 @@ module board_display_cache (
     );
     //output wire
     wire energizer_bool;
-    wire flash_frame;
+    wire current_pac_flash_frame;
     //assign energizer_bool =
     //assign flash_frame =
     //input wire
@@ -387,7 +388,7 @@ module board_display_cache (
         .tile_px_row(pac_px_row),
         .tile_px_col(pac_px_col),
         .energizers(energizer_bool),
-        .flash_frame(flash_frame),
+        .flash_frame(current_pac_flash_frame),
         .rgb(pac_rgb)
     );
 
@@ -407,12 +408,12 @@ module board_display_cache (
     //output wire
     wire [1:0] current_facing;
     wire fright_signal;
-    wire current_frame;
-    wire curent_flash_frame;
+    wire current_ghost_frame;
+    wire curent__ghost_flash_frame;
     wire [1:0] current_ghost;
     //assign current_facing =
     //assign fright_signal =
-    assign current_frame = ghost_frame
+    assign current_ghost_frame = ghost_frame;
     //assign flash_frame =
     assign current_ghost =
         current_state == BLINKY ? 2'd0 :
@@ -420,14 +421,14 @@ module board_display_cache (
         current_state == INKY ? 2'd2 :
         current_state == CLYDE ? 2'd3 : 2'd0;
     //input wire
-    wire [11:0] pacman_rgb;
+    wire [11:0] ghost_rgb;
     ghost_ROM (
         .tile_px_row(ghost_px_row),
         .tile_px_col(ghost_px_col),
         .facing(current_facing),
         .fright(fright_signal),
-        .frame(current_frame),
-        .flash_frame(curent_flash_frame),
+        .frame(current_ghost_frame),
+        .flash_frame(curent_ghost_flash_frame),
         .ghost(current_ghost),
         .rgb(ghost_rgb)
     );
@@ -447,14 +448,14 @@ module board_display_cache (
         .px_col(pacman_px_col)
     );
     //output wire
-    wire [4:0] current_frame;
+    wire [4:0] current_pacman_frame;
     //assign current_frame =
     //input wire
-    wire [11:0] ghost_rgb;
+    wire [11:0] pacman_rgb;
     pacman_ROM (
         .tile_px_row(pacman_px_row),
         .tile_px_col(pacman_px_col),
-        .frame(current_frame),
+        .frame(current_pacman_frame),
         .rgb(pacman_rgb)
     );
 
