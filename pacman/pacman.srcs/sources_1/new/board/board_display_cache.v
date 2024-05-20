@@ -392,6 +392,31 @@ module board_display_cache (
         .rgb(pac_rgb)
     );
 
+    //######## Fruit ROM ########//
+    //output wire
+    wire fruit_count_reset;
+    assign fruit_count_reset = fruit_count_rst;
+    //wiring wire
+    wire [3:0] fruit_px_row;
+    wire [3:0] fruit_px_col;
+    fruit_ROM_address_decoder (
+        .count_rst(fruit_count_reset),
+        .px_clk(clk),
+        .px_row(fruit_px_row),
+        .px_col(fruit_px_col)
+    );
+    //output wire
+    wire [2:0] current_fruit_type;
+    //assign current_fruit_type =
+    //input wire
+    wire [11:0] fruit_rgb;
+    fruit_ROM (
+        .tile_px_row(fruit_px_row),
+        .tile_px_col(fruit_px_col),
+        .type(current_fruit_type),
+        .rgb(fruit_rgb)
+    );
+
     //######## Ghost ROM ########//
     //output wire
     wire ghost_count_reset;

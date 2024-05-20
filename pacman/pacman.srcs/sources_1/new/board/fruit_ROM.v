@@ -1,6 +1,6 @@
 // Bing
 
-module pacman_ROM (
+module fruit_ROM (
     input [3:0] tile_px_row,
     input [3:0] tile_px_col,
     input [2:0] type, //0 ~ 7
