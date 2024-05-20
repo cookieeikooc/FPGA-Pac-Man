@@ -176,7 +176,20 @@ module board_display_cache (
             count_pac_px <= 14'd0;
         end
     end
-    //fruit editing...
+    reg [7:0] count_fruit_px = 8'd0;
+    always @(negedge clk) begin
+        if (current_state == FRUIT & fruit_count_rst == 1'b0) begin
+            if (count_fruit_px == 8'd255) begin
+                count_fruit_px <= 8'd0;
+            end
+            else begin
+                count_fruit_px <= count_fruit_px + 8'd1;
+            end
+        end
+        else begin
+            count_fruit_px <= 8'd0;
+        end
+    end
     reg [7:0] count_blinky_px = 8'd0;
     always @(negedge clk) begin
         if (current_state == BLINKY & blinky_count_rst == 1'b0) begin
@@ -267,7 +280,18 @@ module board_display_cache (
             fruit_count_rst <= 1'b0;
         end
     end
-    //fruit editing...
+    always @(posedge clk) begin
+        if (count_fruit_px == 8'd255 & fright == 1'b0) begin
+            pacman_count_rst <= 1'b1;
+        end
+        else if (count_fruit_px == 8'd255 & fright == 1'b1) begin
+            clyde_count_rst <= 1'b1;
+        end
+        else begin
+            pacman_count_rst <= 1'b0;
+            clyde_count_rst <= 1'b0;
+        end
+    end
     always @(posedge clk) begin
         if (count_pacman_px == 8'd255 & fright == 1'b0) begin
             clyde_count_rst <= 1'b1;
