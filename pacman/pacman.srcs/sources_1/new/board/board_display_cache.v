@@ -5,16 +5,27 @@
 
 module board_display_cache (
     input clk,
+    input clk_60, // 60Hz clock
     input [7:0]px_row,
     input [7:0]px_col,
     input refresh,
     input fright,
     output ready,
     output [11:0] rgb_720p,
-
-    
 );
     reg diplay_720p[0:`HEIGHT-1][0:`WIDTH-1];
+
+    //PAC
+    //output pac number ; input exist or ont
+    //flash clock
+
+    //PACMAN
+    //input coordinate, facing, state(dead)
+
+
+    //GHOST
+    //input coordinate, facing, state(fright, flash frame), current level(flash frame)
+
 
     reg pac_count_rst = 1'b0;
     reg fruit_count_rst = 1'b0;
@@ -306,6 +317,24 @@ module board_display_cache (
         end
     end
 
+
+    //Ghost Animation Frame
+    reg [3:0] counter_ghost_frame = 4'd0;
+    reg ghost_frame;
+    always @(posedge clk_60 or posedge (blinky_count_rst | pinky_count_rst | inky_count_rst | clyde_count_rst)) begin
+        if (rst) begin
+            counter_ghost_frame <= 0;
+            ghost_frame <= 0;
+        end else begin
+            if (counter_ghost_frame == 4'd14) begin
+                ghost_frame <= ~ghost_frame;
+                counter_ghost_frame <= 0;
+            end else begin
+                counter_ghost_frame <= counter_ghost_frame + 1;
+            end
+        end
+    end
+    
     
     //######## Map ROM ########//
     //output wire
@@ -383,7 +412,7 @@ module board_display_cache (
     wire [1:0] current_ghost;
     //assign current_facing =
     //assign fright_signal =
-    //assign current_frame =
+    assign current_frame = ghost_frame
     //assign flash_frame =
     assign current_ghost =
         current_state == BLINKY ? 2'd0 :
