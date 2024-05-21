@@ -19,11 +19,11 @@ Each tile contains 8 * 8 sub pixel
 ### Color
 Code is in 12-bit Hex
   ```
-  0   2   4         9   B   D   F
+  0   2   4   6     9   B   D   F
   000 033 071 128 151 183 222 255
   000 033 071 128 151 183 222 255
-    000     082     173     255
-    0       5         A       F
+  000      082       173      255
+  0         5         A         F
   ```
 
 ## Random Generator 003
