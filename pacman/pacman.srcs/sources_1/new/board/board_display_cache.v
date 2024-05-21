@@ -12,6 +12,39 @@ module board_display_cache (
     input fright,
     output ready,
     output [11:0] rgb_720p
+
+    output [7:0] pac_num,
+    input pac_exist,
+
+    input [4:0] pacman_tile_row,
+    input [4:0] pacman_tile_col,
+    input [2:0] pacman_px_shift,
+    input [1:0] pacman_facing,
+
+    input [4:0] bliky_tile_row,
+    input [4:0] bliky_tile_col,
+    input [2:0] bliky_px_shift,
+    input [1:0] bliky_facing,
+
+    input [4:0] pinky_tile_row,
+    input [4:0] pinky_tile_col,
+    input [2:0] pinky_px_shift,
+    input [1:0] pinky_facing,
+    
+    input [4:0] inky_tile_row,
+    input [4:0] inky_tile_col,
+    input [2:0] inky_px_shift,
+    input [1:0] inky_facing,
+
+    input [4:0] clyde_tile_row,
+    input [4:0] clyde_tile_col,
+    input [2:0] clyde_px_shift,
+    input [1:0] clyde_facing,
+
+    input [3:0] fruit_type,
+    input fruit_exist,
+
+    input [1:0] score_num,
 );
     reg diplay_720p[0:`HEIGHT-1][0:`WIDTH-1];
 
@@ -35,6 +68,7 @@ module board_display_cache (
     reg blinky_count_rst = 1'b0;
     reg pacman_count_rst = 1'b0;
     reg score_count_rst = 1'b0;
+    reg done = 1'b0;
 
 
     //State Machine
@@ -260,7 +294,20 @@ module board_display_cache (
             count_pacman_px <= 8'd0;
         end
     end
-    //score editing...
+    reg [7:0] count score_px = 8'd0;
+    always @(negedge clk) begin
+        if (current_state == SCORE & score_count_rst == 1'b0) begin
+            if (count_score_px == 8'd255) begin
+                count_score_px <= 8'd0;
+            end
+            else begin
+                count_score_px <= count_score_px + 8'd1;
+            end
+        end
+        else begin
+            count_score_px <= 8'd0;
+        end
+    end
 
 
     //Reset Signal
@@ -340,8 +387,14 @@ module board_display_cache (
             score_count_rst <= 1'b0;
         end
     end
-    //score editing...
-
+    always @(posedge clk) begin
+        if (count_score_px == 8'd255) begin
+            done <= 1'b1;
+        end
+        else begin
+            done <= 1'b0;
+        end
+    end
 
     //Ghost Animation Frame
     reg [3:0] counter_ghost_frame = 4'd0;
