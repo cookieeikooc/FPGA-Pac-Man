@@ -1,8 +1,5 @@
 //Bing
 
-`define WIDTH 1280
-`define HEIGHT 720
-
 module board_display_cache (
     input clk,
     input clk_60, // 60Hz clock
@@ -46,7 +43,6 @@ module board_display_cache (
 
     input [1:0] score_num,
 );
-    reg diplay_720p[0:`HEIGHT-1][0:`WIDTH-1];
 
     //PAC
     //output pac number ; input exist or ont
@@ -398,18 +394,13 @@ module board_display_cache (
 
     //Ghost Animation Frame
     reg [3:0] counter_ghost_frame = 4'd0;
-    reg ghost_frame;
-    always @(posedge clk_60 or posedge (blinky_count_rst | pinky_count_rst | inky_count_rst | clyde_count_rst)) begin
-        if (blinky_count_rst | pinky_count_rst | inky_count_rst | clyde_count_rst) begin
+    reg ghost_frame = 1'b0;
+    always @(posedge clk_60) begin
+        if (counter_ghost_frame == 4'd14) begin
+            ghost_frame <= ~ghost_frame;
             counter_ghost_frame <= 0;
-            ghost_frame <= 0;
         end else begin
-            if (counter_ghost_frame == 4'd14) begin
-                ghost_frame <= ~ghost_frame;
-                counter_ghost_frame <= 0;
-            end else begin
-                counter_ghost_frame <= counter_ghost_frame + 1;
-            end
+            counter_ghost_frame <= counter_ghost_frame + 1;
         end
     end
     
@@ -564,7 +555,25 @@ module board_display_cache (
 
     //mearge all layers
     //editing...
-
+    parameter BOARD_WIDTH = 224, BOARD_HIGHT = 248;
+    reg [11:0] rgb[0:BOARD_HIGHT-1][0:BOARD_WIDTH-1];
+    always @(posedge clk) begin
+        if (current_state == MAP) begin
+            rgb[{map_tile_row, map_px_row}][{map_tile_col, map_px_col}] <= map_rgb;
+        end
+        else if (current_state == PAC) begin
+            rgb[pac_px_row][pac_px_col] <= pac_rgb;
+        end
+        else if (current_state == FRUIT) begin
+            rgb[fruit_px_row][fruit_px_col] <= fruit_rgb;
+        end
+        else if (current_state == BLINKY | current_state == PINKY | current_state == INKY | current_state == CLYDE) begin
+            rgb[ghost_px_row][ghost_px_col] <= ghost_rgb;
+        end
+        else if (current_state == PACMAN) begin
+            rgb[pacman_px_row][pacman_px_col] <= pacman_rgb;
+        end
+    end
 
     //output
 
