@@ -558,21 +558,23 @@ module board_display_cache (
     parameter BOARD_WIDTH = 224, BOARD_HIGHT = 248;
     reg [11:0] rgb[0:BOARD_HIGHT-1][0:BOARD_WIDTH-1];
     always @(posedge clk) begin
-        if (current_state == MAP) begin
-            rgb[{map_tile_row, map_px_row}][{map_tile_col, map_px_col}] <= map_rgb;
-        end
-        else if (current_state == PAC) begin
-            rgb[pac_px_row][pac_px_col] <= pac_rgb;
-        end
-        else if (current_state == FRUIT) begin
-            rgb[fruit_px_row][fruit_px_col] <= fruit_rgb;
-        end
-        else if (current_state == BLINKY | current_state == PINKY | current_state == INKY | current_state == CLYDE) begin
-            rgb[ghost_px_row][ghost_px_col] <= ghost_rgb;
-        end
-        else if (current_state == PACMAN) begin
-            rgb[pacman_px_row][pacman_px_col] <= pacman_rgb;
-        end
+        case (current_state)
+            MAP: begin
+                rgb[{map_tile_row, map_px_row}][{map_tile_col, map_px_col}] <= map_rgb;
+            end
+            PAC: begin
+                rgb[pac_px_row][pac_px_col] <= pac_rgb;
+            end
+            FRUIT: begin
+                rgb[fruit_px_row][fruit_px_col] <= fruit_rgb;
+            end
+            BLINKY, PINKY, INKY, CLYDE: begin
+                rgb[ghost_px_row][ghost_px_col] <= ghost_rgb;
+            end
+            PACMAN: begin
+                rgb[pacman_px_row][pacman_px_col] <= pacman_rgb;
+            end
+        endcase
     end
 
     //output
