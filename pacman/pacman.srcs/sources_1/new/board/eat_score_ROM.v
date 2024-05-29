@@ -1,6 +1,6 @@
 //Bing
 
-module score_ROM (
+module eat_score_ROM (
     input [2:0] tile_px_row,
     input [2:0] tile_px_col,
     input need, //0: false, 1: true
@@ -10,7 +10,7 @@ module score_ROM (
 
     reg ROM[0:1023];
     initial begin
-        $readmemh("score_ROM.mem", ROM);
+        $readmemh("eat_score_ROM.mem", ROM);
     end
 
     assign rgb =

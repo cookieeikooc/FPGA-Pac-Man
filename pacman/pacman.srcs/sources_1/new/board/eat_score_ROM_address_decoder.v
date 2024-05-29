@@ -1,6 +1,6 @@
 //Bing
 
-module score_ROM_address_decoder (
+module eat_score_ROM_address_decoder (
     input count_rst, //high at px_clk negedge to reset
     input px_clk, //detect negedge
     output [3:0] px_row,
