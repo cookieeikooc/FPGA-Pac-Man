@@ -55,18 +55,18 @@ module vga (
        end
     end
     
-    always @ (posedge vga_clk)
+    always @ (negedge vga_clk)
     begin
         //horizontal sync
-        vga_hs <= 1'b0;
+        vga_hs <= 1'b1;
         if (vga_pix_x >= VGA_HS_BEGIN && vga_pix_x < VGA_HS_BEGIN + VGA_HS_SIZE) begin
-          vga_hs <= 1'b1;
+          vga_hs <= 1'b0;
         end
         
         //vertical sync
-        vga_vs <= 1'b0;
+        vga_vs <= 1'b1;
         if (vga_pix_y >= VGA_VS_BEGIN && vga_pix_y < VGA_VS_BEGIN + VGA_VS_SIZE) begin
-          vga_vs <= 1'b1;
+          vga_vs <= 1'b0;
         end
         
         //color signal
@@ -80,8 +80,8 @@ module vga (
     assign vga_vs_o  = vga_vs;
     
     //color signal
-    assign vga_red = (vga_pix_x < 1540 && vga_pix_x > 259 && vga_pix_y < 745 && vga_pix_y > 24) ? 4'hF:4'h0;
-    assign vga_green = (vga_pix_x < 1540 && vga_pix_x > 259 && vga_pix_y < 745 && vga_pix_y > 24) ? 4'hF:4'h0;
-    assign vga_blue = (vga_pix_x < 1540 && vga_pix_x > 259 && vga_pix_y < 745 && vga_pix_y > 24) ? 4'hF:4'h0;
+    assign vga_red = (vga_hs == 1'b1 && vga_vs == 1'b1) ? 4'hF:4'h0;
+    assign vga_green = (vga_hs == 1'b1 && vga_vs == 1'b1) ? 4'hF:4'h0;
+    assign vga_blue = (vga_hs == 1'b1 && vga_vs == 1'b1) ? 4'hF:4'h0;
 
 endmodule
