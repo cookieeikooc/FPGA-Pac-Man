@@ -1,5 +1,7 @@
 //Bing
 
+//248 * 224
+
 module board_display_cache (
     input clk,
     input clk_60, // 60Hz clock
@@ -555,7 +557,7 @@ module board_display_cache (
 
     //mearge all layers
     //editing...
-    parameter BOARD_WIDTH = 224, BOARD_HIGHT = 248;
+    parameter BOARD_HIGHT = 248, BOARD_WIDTH = 224;
     reg [11:0] rgb[0:BOARD_HIGHT-1][0:BOARD_WIDTH-1];
     always @(posedge clk) begin
         case (current_state)
