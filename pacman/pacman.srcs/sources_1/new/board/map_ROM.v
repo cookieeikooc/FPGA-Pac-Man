@@ -21,7 +21,7 @@ module map_ROM (
     //Tile ROM
     reg [0:63] map_tile_px[0:33];
     initial begin
-        $readmemh("map_tile.mem", map_tile_px);
+        $readmemh("map_tile_ROM.mem", map_tile_px);
     end
     /*
         00: empty       08: ┘           16: ╝           24: ]           32: ║ right 
