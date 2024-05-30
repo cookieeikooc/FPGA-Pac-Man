@@ -583,5 +583,6 @@ module board_display_cache (
     end
 
     //output
+    assign rgb_720p = rgb[px_row][px_col];
 
 endmodule
