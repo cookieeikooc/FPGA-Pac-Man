@@ -565,16 +565,19 @@ module board_display_cache (
                 rgb[{map_tile_row, map_px_row}][{map_tile_col, map_px_col}] <= map_rgb;
             end
             PAC: begin
-                
+                map_rgb <= map_rgb;
             end
             FRUIT: begin
-                
+                map_rgb <= map_rgb;
             end
             BLINKY, PINKY, INKY, CLYDE: begin
-                
+                map_rgb <= map_rgb;
             end
             PACMAN: begin
-                
+                map_rgb <= map_rgb;
+            end
+            default: begin
+                map_rgb <= map_rgb;
             end
         endcase
     end
