@@ -7,25 +7,22 @@ module fruit_ROM_address_decoder (
     output [3:0] px_col
 );
 
-    reg [3:0] px_r = 4'd0;
-    reg [3:0] px_c = 4'd0;
+    reg [7:0] px = 8'd0;
     always @(negedge px_clk) begin
         if (count_rst == 1) begin
-            px_r <= 4'd0;
-            px_c <= 4'd0;
+            px <= 8'd0;
         end
         else begin
-            if (px_c == 4'd15) begin //if pre-column num reaches the end
-                px_c <= 4'd0; //first column
-                px_r <= px_r + 4'd1; //next row
+            if (px == 8'd255) begin
+                px <= 8'd0;
             end
             else begin
-                px_c <= px_c + 4'd1; //next column
+                px <= px + 8'd1;
             end
         end
     end
 
-    assign px_row = px_r;
-    assign px_col = px_c;
+    assign px_row = px[7:4];
+    assign px_col = px[3:0];
 
 endmodule
