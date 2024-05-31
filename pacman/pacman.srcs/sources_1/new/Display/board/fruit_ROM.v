@@ -48,7 +48,6 @@ module fruit_ROM (
         tile[31] = 12'hDDF;
     end
 
-    assign rgb = 
-        exist == 1'b0 ? 12'h000 : tile[{type, ROM[{type, tile_px_row, tile_px_col}]}];
+    assign rgb = tile[{type, ROM[{type, tile_px_row, tile_px_col}]}];
     
 endmodule

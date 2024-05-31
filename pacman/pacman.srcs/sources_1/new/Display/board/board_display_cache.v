@@ -197,7 +197,7 @@ module board_display_cache (
     reg [13:0] count_pac_px = 14'd0;
     always @(negedge clk) begin
         if (current_state == PAC & pac_count_rst == 1'b0) begin
-            if (count_pac_px == 14'd12927) begin
+            if (count_pac_px == 14'd15551) begin
                 count_pac_px <= 14'd0;
             end
             else begin
@@ -292,7 +292,7 @@ module board_display_cache (
             count_pacman_px <= 8'd0;
         end
     end
-    reg [7:0] count score_px = 8'd0;
+    reg [7:0] count_score_px = 8'd0;
     always @(negedge clk) begin
         if (current_state == SCORE & score_count_rst == 1'b0) begin
             if (count_score_px == 8'd255) begin
@@ -318,7 +318,7 @@ module board_display_cache (
         end
     end
     always @(posedge clk) begin
-        if (count_pac_px == 14'd12927) begin
+        if (count_pac_px == 14'd15551) begin
             fruit_count_rst <= 1'b1;
         end
         else begin
@@ -394,6 +394,18 @@ module board_display_cache (
         end
     end
 
+    //Energizer Flash Frame
+    reg [2:0] counter_energizer_flash_frame = 3'd0;
+    reg energizer_flash_frame = 1'b0;
+    always @(posedge clk_60) begin
+        if (counter_energizer_flash_frame == 3'd7) begin
+            energizer_flash_frame <= ~energizer_flash_frame;
+            counter_energizer_flash_frame <= 0;
+        end else begin
+            counter_energizer_flash_frame <= counter_energizer_flash_frame + 1;
+        end
+    end
+
     //Ghost Animation Frame
     reg [3:0] counter_ghost_frame = 4'd0;
     reg ghost_frame = 1'b0;
@@ -451,7 +463,7 @@ module board_display_cache (
     wire energizer_bool;
     wire current_pac_flash_frame;
     //assign energizer_bool =
-    //assign flash_frame =
+    assign current_pac_flash_frame = energizer_flash_frame;
     //input wire
     wire [11:0] pac_rgb;
     pac_ROM (
