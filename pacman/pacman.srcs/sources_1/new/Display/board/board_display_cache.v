@@ -197,7 +197,7 @@ module board_display_cache (
     reg [13:0] count_pac_px = 14'd0;
     always @(negedge clk) begin
         if (current_state == PAC & pac_count_rst == 1'b0) begin
-            if (count_pac_px == 14'd15551) begin
+            if (count_pac_px == 14'd15615) begin
                 count_pac_px <= 14'd0;
             end
             else begin
@@ -318,7 +318,7 @@ module board_display_cache (
         end
     end
     always @(posedge clk) begin
-        if (count_pac_px == 14'd15551) begin
+        if (count_pac_px == 14'd15615) begin
             fruit_count_rst <= 1'b1;
         end
         else begin
@@ -462,7 +462,7 @@ module board_display_cache (
     //output wire
     wire energizer_bool;
     wire current_pac_flash_frame;
-    //assign energizer_bool =
+    assign energizer_bool = count_pac_px[13:6] == 8'd30 | count_pac_px[13:6] == 8'd35 | count_pac_px[13:6] == 8'd158 | count_pac_px[13:6] == 8'd177 ? 1'b1 : 1'b0;
     assign current_pac_flash_frame = energizer_flash_frame;
     //input wire
     wire [11:0] pac_rgb;
