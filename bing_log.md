@@ -39,8 +39,9 @@ The ROM is store in a form of tiles, getting a tile from the ROM then cast it in
 
 ## Display cache
 Cut the whole display in to three pieces, score, board, level, so that we can combine all cache to create the display memory array for VGA output module.
-
-## PacMan
+### Pacs
+  There's 244 Pacs in the map, including 4 energizers, which flashes in the frequency of 8Hz (4 cycles a sec).
+### PacMan
 
 ## PacMan
 From PACMAN: 
