@@ -2,22 +2,22 @@
 
 ## Pixel Mesurement
 ### Size in px
-  - Map Hight: 248
+  - Map Height: 248
   - Map Width: 224
-  - Path: 8 * 8
-  - Pac-Man: 16 * 16
-  - Ghost: 16 * 16
-  - Bonus fruit: 16 * 16
-  - Pac: 8 * 8
-  - Energizer: 8 * 8
+  - Path: 8 x 8
+  - Pac-Man: 16 x 16
+  - Ghost: 16 x 16
+  - Bonus fruit: 16 x 16
+  - Pac: 8 x 8
+  - Energizer: 8 x 8
 
-## Pixel Masurement
+## Pixel Measurement
 ### Block
-Each tile contains 8 * 8 sub pixels
-  - Map Hight: 31
+Each tile contains 8 x 8 sub pixels
+  - Map Height: 31
   - Map Width: 28
 ### Color
-The original color is 8bit RGB, which red has 3 bit, green has 3 bit and blue has 1 bit. I only have the original color palette in PNG, which is 8 bit for each color, so I have to compress the 0 to 255 color to 8bit RGB, and then expand it to 16 bit color for VGA output. As you can see we have to approximate color when expanding color form 8bit to 48bit, the code block below shows the approximation result.
+The original color is 8bit RGB, which red has 3 bit, green has 3 bit and blue has 1 bit. I only have the original color palette in PNG, which is 8 bit for each color, so I have to compress the 0 to 255 color range to 8-bit RGB, and then expand it to 12-bit color for VGA output. As you can see we have to approximate the color when expanding from 8-bit to 12-bit, the code block below shows the approximation result.
   ```
   0   2   4   6     9   B   D   F
   000 033 071 128 151 183 222 255
@@ -33,12 +33,12 @@ In order to rebuild the original arcade vibes, we need to simulate the random bi
 ## ROM
 With data store in ROM, pre-made pixels can be easily get with address decoder.
 ### Tiles
-The ROM is store in a form of tiles, getting a tile from the ROM then cast it into display cache
+The ROM is stored in a form of tiles, then get a tile from the ROM then cast it into display cache
 
 ## Display cache
-Cut the whole display in to three pieces, score, board, level, so that we can combine all cache to create the display memory array for VGA output module.
+Cut the whole display into three parts, score, board and level, so that we can combine all cache to create the display memory array for the VGA output module.
 ### Map
-The Map have 34 different types of tile, which is given with number 0 to 33, storged in a 28 * 31 array, and each tile is an 8 * 8 tile, with only colored or black storged in it.
+The Map have 34 different types of tile, which is given with number 0 to 33, stored in a 28 x 31 array, and each tile is an 8 x 8 tile, with only colored or black stored in it.
 ```
 00: empty       08: ┘           16: ╝           24: ]           32: ║ right 
 01: ┌ outer     09: ╔ outer     17: ╒           25: ─ top       33: gate
@@ -52,7 +52,7 @@ The Map have 34 different types of tile, which is given with number 0 to 33, sto
 ### Pacs
 There's 244 Pacs in the map, including 4 energizers, which flashes in the frequency of 8Hz (4 cycles a sec).
 ### PacMan
-PacMan has one round shape, two opened mouth with each direction, and 13 frames for dying animation, as the code block below shows.
+PacMan has one round shape, two opened mouth with each direction, and 13 frames for dying animation, as the code block below has shown.
 ```
 0: Closed 1: R wide open 2: R open 3: D wide open
 4: D open 5: L wide open 6: L open 7: U wide open
@@ -70,7 +70,7 @@ From PACMAN:
 ```
 
 ## Ghost
-When the frighten mode is going to end, the ghosts will flash, with the frequency of 4Hz (2 cycles a sec). The flash frame starting is independent to the position of the ghosts and the animation frame, and the animation frame is independent to the position of the ghost, with the frequency of 4Hz.
+When the frightened mode is going to end, the ghosts will flash at a frequency of 4Hz (2 cycles a sec). The flash frame starting is independent from the position of ghosts and the animation frame, and the animation frame is independent from the position of ghosts, with the frequency of 4Hz.
 
 
 queued:
