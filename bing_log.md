@@ -18,8 +18,6 @@ Each tile contains 8 * 8 sub pixels
   - Map Width: 28
 ### Color
 The original color is 8bit RGB, which red has 3 bit, green has 3 bit and blue has 1 bit. I only have the original color palette in PNG, which is 8 bit for each color, so I have to compress the 0 to 255 color to 8bit RGB, and then expand it to 16 bit color for VGA output. As you can see we have to approximate color when expanding color form 8bit to 48bit, the code block below shows the approximation result.
-
-Code is in 12-bit Hex
   ```
   0   2   4   6     9   B   D   F
   000 033 071 128 151 183 222 255
@@ -39,9 +37,27 @@ The ROM is store in a form of tiles, getting a tile from the ROM then cast it in
 
 ## Display cache
 Cut the whole display in to three pieces, score, board, level, so that we can combine all cache to create the display memory array for VGA output module.
-    ### Pacs
-      There's 244 Pacs in the map, including 4 energizers, which flashes in the frequency of 8Hz (4 cycles a sec).
-    ### PacMan
+### Map
+The Map have 34 different types of tile, which is given with number 0 to 33, storged in a 28 * 31 array, and each tile is an 8 * 8 tile, with only colored or black storged in it.
+```
+00: empty       08: ┘           16: ╝           24: ]           32: ║ right 
+01: ┌ outer     09: ╔ outer     17: ╒           25: ─ top       33: gate
+02: ┐           10: ╗           18: ╕           26: ─ bottom    
+03: └           11: ╚           19: ╓           27: │ left      
+04: ┘           12: ╝           20: ╖           28: │ right     
+05: ┌ inner     13: ╔ sharp     21: ╙           29: ═ top       
+06: ┐           14: ╗           22: ╜           30: ═ bottom
+07: └           15: ╚           23: [           31: ║ left
+```
+### Pacs
+There's 244 Pacs in the map, including 4 energizers, which flashes in the frequency of 8Hz (4 cycles a sec).
+### PacMan
+PacMan has one round shape, two opened mouth with each direction, and 13 frames for dying animation, as the code block below shows.
+```
+0: Closed 1: R wide open 2: R open 3: D wide open
+4: D open 5: L wide open 6: L open 7: U wide open
+8: U open 9: Die 1       20: Die 12
+```
 
 ## PacMan
 From PACMAN: 
