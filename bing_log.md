@@ -34,6 +34,8 @@ In order to rebuild the original arcade vibes, we need to simulate the random bi
 With data store in ROM, pre-made pixels can be easily get with address decoder.
 ### Tiles
 The ROM is stored in a form of tiles, then get a tile from the ROM then cast it into display cache
+### Address decoder
+To make the task of the cache more simple, given the adddress decoder a clock signal, and it will generate ROM address with the specific form that the ROM can use, and a counter in cache that keep track of the clock cycles passed.
 
 ## Display cache
 Cut the whole display into three parts, score, board and level, so that we can combine all cache to create the display memory array for the VGA output module.
@@ -49,15 +51,20 @@ The Map have 34 different types of tile, which is given with number 0 to 33, sto
 06: ┐           14: ╗           22: ╜           30: ═ bottom
 07: └           15: ╚           23: [           31: ║ left
 ```
+This step is done automatically, regardless of any input from other modules, exept the refresh signal which trigger the whole system when new fram need to be generated, which is at 60Hz.
 ### Pacs
-There's 244 Pacs in the map, including 4 energizers, which flashes in the frequency of 8Hz (4 cycles a sec).
+There's 244 Pacs in the map, including 4 energizers, which flashes in the frequency of 8Hz (4 cycles a sec). The cache will get the existence of the pac from a 244 elements long array.
+### Fruit //editing
 ### PacMan
-PacMan has one round shape, two opened mouth with each direction, and 13 frames for dying animation, as the code block below has shown.
+PacMan has one round shape, two opened mouth with each direction, and 13 frames for dying animation.
 ```
 0: Closed 1: R wide open 2: R open 3: D wide open
 4: D open 5: L wide open 6: L open 7: U wide open
 8: U open 9: Die 1       20: Die 12
 ```
+### Ghost
+When the frightened mode is going to end, the ghosts will flash at a frequency of 4Hz (2 cycles a sec). The flash frame starting is independent from the position of ghosts and the animation frame, and the animation frame is independent from the position of ghosts, with the frequency of 4Hz.
+### Score //editing
 
 ## PacMan
 From PACMAN: 
@@ -70,10 +77,7 @@ From PACMAN:
 ```
 
 ## Ghost
-When the frightened mode is going to end, the ghosts will flash at a frequency of 4Hz (2 cycles a sec). The flash frame starting is independent from the position of ghosts and the animation frame, and the animation frame is independent from the position of ghosts, with the frequency of 4Hz.
 
-
-queued:
 
 
 
