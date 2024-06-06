@@ -73,4 +73,7 @@ module pac(
         end
     end
 
+    assign pac_existance = pac[{pac_col, pac_row}];
+    assign eaten_pac_num = score;
+
 endmodule
