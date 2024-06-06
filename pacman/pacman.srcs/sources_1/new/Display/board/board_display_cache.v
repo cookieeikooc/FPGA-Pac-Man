@@ -12,7 +12,8 @@ module board_display_cache (
     output ready,
     output [11:0] rgb_720p
 
-    output [7:0] pac_num,
+    output [4:0] pac_row,
+    output [4:0] pac_col,
     input pac_exist,
 
     input [4:0] pacman_tile_row,
