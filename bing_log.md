@@ -16,12 +16,12 @@ Each tile contains 8 x 8 sub pixels
   - Map Height: 31
   - Map Width: 28
 ### Color
-The original color is 8bit RGB, which red has 3 bit, green has 3 bit and blue has 1 bit. I only have the original color palette in PNG, which is 8 bit for each color, so I have to compress the 0 to 255 color range to 8-bit RGB, and then expand it to 12-bit color for VGA output. As you can see we have to approximate the color when expanding from 8-bit to 12-bit, the code block below shows the approximation result.
+The original color is 8bit RGB, 3 bit for red, 3 bit for green and 1 bit for blue. I only have the original color palette in PNG, which is 8 bit for each color, so I have to compress the 0 to 255 color range to 8-bit RGB, and then expand it to 12-bit color for VGA output. As you can see we have to approximate the color when expanding from 8-bit to 12-bit, the code block below shows the approximation result.
   ```
   0   2   4   6     9   B   D   F
-  000 033 071 128 151 183 222 255
-  000 033 071 128 151 183 222 255
-  000      082       173      255
+  000 033 071 128 151 183 222 255   R
+  000 033 071 128 151 183 222 255   G
+  000      082       173      255   B
   0         5         A         F
   ```
 
