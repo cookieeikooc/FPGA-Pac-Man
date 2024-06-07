@@ -79,7 +79,5 @@ From PACMAN:
 ## Ghost
 
 
-
-
-
-
+## C++
+There's lots of syntax conversion task that deals with large amount of data which is barely possible to be done by hands, mostly because of the [.mem file](https://docs.amd.com/r/en-US/ug901-vivado-synthesis/Specifying-RAM-Initial-Contents-in-an-External-Data-File) that can only be either binary or hexadecimal. The CPP file contains mostly file I/O, switches and simple calculations.
