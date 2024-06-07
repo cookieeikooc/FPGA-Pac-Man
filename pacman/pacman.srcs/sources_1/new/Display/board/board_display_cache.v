@@ -59,6 +59,9 @@ module board_display_cache (
     //input coordinate, facing, state(fright, flash frame), current level(flash frame)
 
 
+////////////////////////////////////////////////////////////////
+//                       STATE MACHINE                        //
+////////////////////////////////////////////////////////////////
     reg pac_count_rst = 1'b0;
     reg fruit_count_rst = 1'b0;
     reg clyde_count_rst = 1'b0;
@@ -70,7 +73,7 @@ module board_display_cache (
     reg done = 1'b0;
 
 
-    //State Machine
+    //State Machine Switch
     parameter READY = 0, MAP = 1, PAC = 2, FRUIT = 3, PACMAN = 4, BLINKY = 5, PINKY = 6, INKY = 7, CLYDE = 8, SCORE = 9;
     reg [3:0] current_state, next_state;
     initial begin
@@ -176,23 +179,23 @@ module board_display_cache (
         current_state <= next_state;
     end
 
-    //ready signal
+    //Ready Signal Out
     assign ready = current_state == READY ? 1'b1 : 1'b0;
 
 
-    //ROM Signal
-    reg [13:0] count_map_px = 14'd0;
+    //ROM Pixel Signal
+    reg [15:0] count_map_px = 16'd0;
     always @(negedge clk) begin
         if (current_state == MAP & refresh == 1'b0) begin
-            if (count_map_px == 14'd13887) begin
-                count_map_px <= 14'd0;
+            if (count_map_px == 16'd55551) begin
+                count_map_px <= 16'd0;
             end
             else begin
-                count_map_px <= count_map_px + 14'd1;
+                count_map_px <= count_map_px + 16'd1;
             end
         end
         else begin
-            count_map_px <= 14'd0;
+            count_map_px <= 16'd0;
         end
     end
     reg [13:0] count_pac_px = 14'd0;
@@ -311,7 +314,7 @@ module board_display_cache (
 
     //Reset Signal
     always @(posedge clk) begin
-        if (count_map_px == 14'd13887) begin
+        if (count_map_px == 16'd55551) begin
             pac_count_rst <= 1'b1;
         end
         else begin
@@ -395,6 +398,12 @@ module board_display_cache (
         end
     end
 
+////////////////////////////////////////////////////////////////
+//             INPUT MANAGEMENT & CONTROL SIGNALS             //
+////////////////////////////////////////////////////////////////
+    //Pac Existance Signal
+    
+
     //Energizer Flash Frame
     reg [2:0] counter_energizer_flash_frame = 3'd0;
     reg energizer_flash_frame = 1'b0;
@@ -420,6 +429,9 @@ module board_display_cache (
     end
     
     
+////////////////////////////////////////////////////////////////
+//                             ROM                            //
+////////////////////////////////////////////////////////////////
     //######## Map ROM ########//
     //output wire
     wire map_count_reset;
@@ -567,6 +579,9 @@ module board_display_cache (
         .rgb(pacman_rgb)
     );
 
+    //######## Score ROM ########//
+    //editing...
+    
 
     //mearge all layers
     //editing...
