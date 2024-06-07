@@ -11,7 +11,6 @@
   - Pac: 8 x 8
   - Energizer: 8 x 8
 
-## Pixel Measurement
 ### Block
 Each tile contains 8 x 8 sub pixels
   - Map Height: 31
