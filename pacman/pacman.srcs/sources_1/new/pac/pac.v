@@ -54,7 +54,7 @@ module pac(
         end
     end
 
-    reg [0:895] pac;
+    reg pac[0:895];
     reg [8:0] score = 9'd0;
     always @(clk) begin
         if (pac[{mapped_col, mapped_row}] == 1'b1) begin
