@@ -6,11 +6,10 @@ module board_display_cache (
     input clk,
     input clk_60, // 60Hz clock
     input [7:0]px_row,
-    input [7:0]px_col,
     input refresh,
     input fright,
     output ready,
-    output [11:0] rgb_720p,
+    output [2687:0] rgb_720p,
 
     input [4:0] pacman_tile_row,
     input [4:0] pacman_tile_col,
@@ -627,6 +626,6 @@ module board_display_cache (
     end
 
     //output
-    assign rgb_720p = rgb[px_row][px_col];
+    assign rgb_720p = rgb[px_row][0:0:BOARD_WIDTH-1];
 
 endmodule
