@@ -7,7 +7,7 @@ module fruit_ROM (
     output [11:0] rgb
 );
 
-    reg ROM [0:2047];
+    reg [1:0] ROM [0:2047];
     initial begin
         $readmemh("fruit_ROM.mem", ROM);
     end
