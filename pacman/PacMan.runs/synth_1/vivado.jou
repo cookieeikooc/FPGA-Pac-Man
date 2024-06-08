@@ -3,12 +3,12 @@
 # SW Build 4029153 on Fri Oct 13 20:14:34 MDT 2023
 # IP Build 4028589 on Sat Oct 14 00:45:43 MDT 2023
 # SharedData Build 4025554 on Tue Oct 10 17:18:54 MDT 2023
-# Start of session at: Wed May 15 00:33:17 2024
-# Process ID: 16596
-# Current directory: C:/Users/admin/Documents/FPGA/PacMan/PacMan.runs/synth_1
-# Command line: vivado.exe -log display_cache.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source display_cache.tcl
-# Log file: C:/Users/admin/Documents/FPGA/PacMan/PacMan.runs/synth_1/display_cache.vds
-# Journal file: C:/Users/admin/Documents/FPGA/PacMan/PacMan.runs/synth_1\vivado.jou
+# Start of session at: Sat Jun  8 22:57:30 2024
+# Process ID: 5260
+# Current directory: C:/Users/admin/Documents/FPGA/FPGA-Pac-Man/pacman/PacMan.runs/synth_1
+# Command line: vivado.exe -log vga.vds -product Vivado -mode batch -messageDb vivado.pb -notrace -source vga.tcl
+# Log file: C:/Users/admin/Documents/FPGA/FPGA-Pac-Man/pacman/PacMan.runs/synth_1/vga.vds
+# Journal file: C:/Users/admin/Documents/FPGA/FPGA-Pac-Man/pacman/PacMan.runs/synth_1\vivado.jou
 # Running On: DESKTOP-MJV8M7M, OS: Windows, CPU Frequency: 2592 MHz, CPU Physical cores: 6, Host memory: 12679 MB
 #-----------------------------------------------------------
-source display_cache.tcl -notrace
+source vga.tcl -notrace

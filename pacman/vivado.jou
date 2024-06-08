@@ -13,3 +13,13 @@
 #-----------------------------------------------------------
 start_gui
 open_project C:/Users/admin/Documents/FPGA/FPGA-Pac-Man/pacman/pacman.xpr
+update_compile_order -fileset sources_1
+reset_run synth_1
+launch_runs synth_1 -jobs 12
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 12
+wait_on_run synth_1
+reset_run synth_1
+launch_runs synth_1 -jobs 12
+wait_on_run synth_1

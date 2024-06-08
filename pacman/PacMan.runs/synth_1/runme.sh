@@ -25,7 +25,7 @@ else
 fi
 export LD_LIBRARY_PATH
 
-HD_PWD='C:/Users/admin/Documents/FPGA/PacMan/PacMan.runs/synth_1'
+HD_PWD='C:/Users/admin/Documents/FPGA/FPGA-Pac-Man/pacman/pacman.runs/synth_1'
 cd "$HD_PWD"
 
 HD_LOG=runme.log
@@ -41,4 +41,4 @@ EAStep()
      fi
 }
 
-EAStep vivado -log display_cache.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source display_cache.tcl
+EAStep vivado -log vga.vds -m64 -product Vivado -mode batch -messageDb vivado.pb -notrace -source vga.tcl
