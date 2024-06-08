@@ -39,10 +39,7 @@ module output_display_array (
     reg [11:0] rgb[0:287][0:223];
     always @(posedge clk) begin
         if (board_ready == 1'b1 & row >= 11'd1280) begin
-            rgb[24 + board_row_counter][board_px_col_counter] <= board_rgb;
-        end
-        else begin
-            rgb <= rgb;
+            rgb[24 + board_row_counter][0:223] <= board_rgb;
         end
     end
 
