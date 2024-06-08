@@ -543,7 +543,7 @@ module board_display_cache (
     //assign current_facing =
     //assign fright_signal =
     assign current_ghost_frame = ghost_frame;
-    //assign flash_frame =
+    //assign curent__ghost_flash_frame = 
     assign current_ghost =
         current_state == BLINKY ? 2'd0 :
         current_state == PINKY ? 2'd1 :
