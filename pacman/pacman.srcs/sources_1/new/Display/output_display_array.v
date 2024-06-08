@@ -16,7 +16,7 @@ module output_display_array (
     reg [7:0] board_px_row_counter = 8'd0;
     reg [7:0] board_px_col_counter = 8'd0;
     always @(posedge clk) begin
-        if (board_ready == 1'b1 & row >= 10'd1280) begin
+        if (board_ready == 1'b1 & row >= 10'd720) begin
             if (board_px_col_counter == 8'd223) begin
                 board_px_col_counter <= 8'd0;
                 if (board_px_row_counter == 8'd247) begin
