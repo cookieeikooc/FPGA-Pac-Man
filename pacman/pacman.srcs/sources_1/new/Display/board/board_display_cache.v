@@ -626,6 +626,20 @@ module board_display_cache (
     end
 
     //output
-    assign rgb_720p = rgb[px_row][0:BOARD_WIDTH-1];
+    assign rgb_720p = {
+        rgb[px_row][0],
+        rgb[px_row][1],
+        rgb[px_row][2],
+        rgb[px_row][3],
+        rgb[px_row][4],
+        rgb[px_row][5],
+        rgb[px_row][6],
+        rgb[px_row][7],
+        rgb[px_row][8],
+        rgb[px_row][9],
+        rgb[px_row][10],
+        rgb[px_row][11],
+        rgb[px_row][12]
+    };
 
 endmodule
