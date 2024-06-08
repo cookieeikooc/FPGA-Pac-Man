@@ -32,7 +32,7 @@ module pac(
                 end
             endcase
         end
-        else (pacman_px_shift == 3'd0 | pacman_px_shift == 3'd1) begin
+        else if (pacman_px_shift == 3'd0 | pacman_px_shift == 3'd1) begin
             case (pacman_facing)
                 2'd2: begin
                     mapped_row <= pacman_tile_row;
