@@ -11,7 +11,7 @@ module output_display_array (
 
     //Score 24 * 224
     //Board 248 * 224
-    //Level 8 * 224
+    //Level 16 * 224
     wire board_ready;
     reg [7:0] board_px_row_counter = 8'd0;
     reg [7:0] board_px_col_counter = 8'd0;
@@ -47,7 +47,6 @@ module output_display_array (
     //Read Cache and Scale
     reg [11:0] rgb[0:287][0:223];
     always @(posedge clk) begin
-        /* need to change
         if (board_ready == 1'b1 & h_sync == 1'b0 & v_sync == 1'b0) begin
             rgb[128 + board_px_row_counter * 2][784 + board_px_col_counter * 2] <= board_rgb;
             rgb[128 + board_px_row_counter * 2][784 + board_px_col_counter * 2 + 1] <= board_rgb;
@@ -57,7 +56,6 @@ module output_display_array (
         else begin
             rgb <= rgb;
         end
-        */
     end
 
     assign rgb_720p = rgb[row][col];

@@ -10,11 +10,7 @@ module board_display_cache (
     input refresh,
     input fright,
     output ready,
-    output [11:0] rgb_720p
-
-    output [4:0] pac_row,
-    output [4:0] pac_col,
-    input pac_exist,
+    output [11:0] rgb_720p,
 
     input [4:0] pacman_tile_row,
     input [4:0] pacman_tile_col,
@@ -44,7 +40,7 @@ module board_display_cache (
     input [3:0] fruit_type,
     input fruit_exist,
 
-    input [1:0] score_num,
+    input [1:0] score_num
 );
 
     //PAC
@@ -613,9 +609,6 @@ module board_display_cache (
                     if (pac_rgb != 12'h000) begin
                         rgb[{pac_row, pac_px_row}][{pac_col, pac_px_col}] <= pac_rgb;
                     end
-                end
-                else begin
-                    rgb <= rgb;
                 end
             end
             FRUIT: begin
