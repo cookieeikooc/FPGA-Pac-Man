@@ -81,11 +81,15 @@ module vga (
 
    //display array
    wire [11:0] rgb;
+   wire [10:0] pix_x;
+   wire [9:0] pix_y;
+   assign pix_x = vga_pix_x;
+   assign pix_y = vga_pix_y;
    output_display_array (
       .h_sync(vga_hs),
       .v_sync(vga_vs),
-      .row(vga_pix_y),
-      .col(vga_pix_x),
+      .row(pix_y),
+      .col(pix_x),
       .rgb_720p(rgb)
    );
 

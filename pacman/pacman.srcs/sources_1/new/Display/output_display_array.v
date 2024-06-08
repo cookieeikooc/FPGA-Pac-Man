@@ -6,7 +6,7 @@ module output_display_array (
     input v_sync,
     input [10:0] row,
     input [9:0] col,
-    output [3:0] rgb_720p
+    output [11:0] rgb_720p
 );
 
     //Score 24 * 224

@@ -59,7 +59,7 @@ module pac(
     initial begin
         $readmemh("pac_init.mem", pac);
     end
-    always @(clk) begin
+    always @(posedge clk) begin
         if (pac[{mapped_col, mapped_row}] == 1'b1) begin
             if ((mapped_row == 5'd3 | mapped_row == 5'd23) & (mapped_col == 5'd1 | mapped_col == 5'd26)) begin
                 pac[{mapped_col, mapped_row}] <= 1'b0;
