@@ -402,7 +402,20 @@ module board_display_cache (
 //             INPUT MANAGEMENT & CONTROL SIGNALS             //
 ////////////////////////////////////////////////////////////////
     //Pac Existance Signal
-    
+    reg [4:0] pac_coordinate[0:487];
+    initial begin
+        $readmemh("pac_coordinate_ROM.mem", pac_coordinate);
+    end
+    wire [4:0] pac_row;
+    wire [4:0] pac_col;
+    assign pac_row = pac_coordinate[count_pac_px[13:6] * 2];
+    assign pac_col = pac_coordinate[count_pac_px[13:6] * 2 + 1];
+    wire pac_exist;
+    pac (
+        .pac_row(pac_row),
+        .pac_col(pac_col),
+        .pac_existance(pac_exist)
+    );
 
     //Energizer Flash Frame
     reg [2:0] counter_energizer_flash_frame = 3'd0;
@@ -430,7 +443,7 @@ module board_display_cache (
     
     
 ////////////////////////////////////////////////////////////////
-//                             ROM                            //
+//                        DISPLAY ROM                         //
 ////////////////////////////////////////////////////////////////
     //######## Map ROM ########//
     //output wire
@@ -583,6 +596,9 @@ module board_display_cache (
     //editing...
     
 
+////////////////////////////////////////////////////////////////
+//                           LAYERS                           //
+////////////////////////////////////////////////////////////////
     //mearge all layers
     //editing...
     parameter BOARD_HIGHT = 248, BOARD_WIDTH = 224;
@@ -593,19 +609,26 @@ module board_display_cache (
                 rgb[{map_tile_row, map_px_row}][{map_tile_col, map_px_col}] <= map_rgb;
             end
             PAC: begin
-                map_rgb <= map_rgb;
+                if (pac_exist) begin
+                    if (pac_rgb != 12'h000) begin
+                        rgb[{pac_row, pac_px_row}][{pac_col, pac_px_col}] <= pac_rgb;
+                    end
+                end
+                else begin
+                    rgb <= rgb;
+                end
             end
             FRUIT: begin
-                map_rgb <= map_rgb;
+                rgb <= rgb;
             end
             BLINKY, PINKY, INKY, CLYDE: begin
-                map_rgb <= map_rgb;
+                rgb <= rgb;
             end
             PACMAN: begin
-                map_rgb <= map_rgb;
+                rgb <= rgb;
             end
             default: begin
-                map_rgb <= map_rgb;
+                rgb <= rgb;
             end
         endcase
     end

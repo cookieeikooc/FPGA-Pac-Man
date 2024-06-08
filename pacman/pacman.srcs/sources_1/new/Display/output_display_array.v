@@ -1,30 +1,13 @@
 //Bing
 
-`define WIDTH 1280
-`define HEIGHT 720
-
 module output_display_array (
     input clk,
     input h_sync,
     input v_sync,
     input [10:0] row,
-    input [10:0] col,
+    input [9:0] col,
     output [3:0] rgb_720p
 );
-
-
-    /*
-    for layer assignment
-    if ...
-        top
-    else if ...
-        second
-    else if ...
-        third
-    ...
-    else if ...
-        bottom
-    */
 
     //Score 24 * 224
     //Board 248 * 224
@@ -62,8 +45,9 @@ module output_display_array (
     );
 
     //Read Cache and Scale
-    reg [11:0] rgb[0:`HEIGHT-1][0:`WIDTH-1];
+    reg [11:0] rgb[0:287][0:223];
     always @(posedge clk) begin
+        /* need to change
         if (board_ready == 1'b1 & h_sync == 1'b0 & v_sync == 1'b0) begin
             rgb[128 + board_px_row_counter * 2][784 + board_px_col_counter * 2] <= board_rgb;
             rgb[128 + board_px_row_counter * 2][784 + board_px_col_counter * 2 + 1] <= board_rgb;
@@ -73,6 +57,7 @@ module output_display_array (
         else begin
             rgb <= rgb;
         end
+        */
     end
 
     assign rgb_720p = rgb[row][col];
