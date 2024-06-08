@@ -609,23 +609,23 @@ module board_display_cache (
                         rgb[{pac_row, pac_px_row}][{pac_col, pac_px_col}] <= pac_rgb;
                     end
                 end
-            end
+            end /*
             FRUIT: begin
-                rgb <= rgb;
+                
             end
             BLINKY, PINKY, INKY, CLYDE: begin
-                rgb <= rgb;
+                
             end
             PACMAN: begin
-                rgb <= rgb;
+
             end
             default: begin
-                rgb <= rgb;
-            end
+
+            end */
         endcase
     end
 
     //output
-    assign rgb_720p = rgb[px_row][0:0:BOARD_WIDTH-1];
+    assign rgb_720p = rgb[px_row][0:BOARD_WIDTH-1];
 
 endmodule
