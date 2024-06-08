@@ -21,75 +21,105 @@
 // 
 //////////////////////////////////////////////////////////////////////////////////
 
-/*
-  //Bing
-    reg [5:0] map_tile[0:867];
-    initial begin
-        $readmemh("map_ROM.mem", map_tile);
-    end
-
-    // row: 1, col: 1
-    map_tile_px[28 * row + col] == 6'b000000
-*/
 
 module pm_idle (
   input           l_b,r_b,u_b,d_b,
   input           sys_clk,
   input           sys_rst_n,
   input[1:0]      dir,
+  output reg[1:0] pm_c_dir,
   output [2:0] g_col,g_row,
-  output [3:0] gp_col,gp_row,
+  output [2:0] gp_col,gp_row,
   output reg[4:0] col,row,
-  output reg[3:0] p_col,p_row,
+  output reg[2:0] p_col,p_row,
   output reg[1:0] pm_state,
   output reg[1:0] g_state
 );
 
-reg l, r, u, d;
+//reg l, r, u, d;
+reg[1:0] pm_n_dir;
+reg [5:0] map_tile[0:867];
+initial
+begin
+  $readmemh("map_ROM.mem", map_tile);
+end
+
+    // row: 1, col: 1
+    //map_tile_px[28 * row + col] == 6'b000000
 
 always @ (posedge sys_clk or negedge sys_rst_n)
 begin
   if(!sys_rst_n)
   begin
-    l <= 1'd1;
-    r <= 1'd0;
-    u <= 1'd0;
-    d <= 1'd0;
+    pm_c_dir <= 2'd2;
+    pm_n_dir <= 2'd2;
+  end
+  else if(col != 3'd0 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * row + col - 1] == 6'b000000 && (pm_n_dir == 2'd2 || l_b == 1'd1))
+  begin
+    pm_c_dir <= 2'd2;
+    pm_n_dir <= 2'd2;
+  end
+  else if(col == 3'd0 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * row + col + 27] == 6'b000000 && (pm_n_dir == 2'd2 || l_b == 1'd1))
+  begin
+    pm_c_dir <= 2'd2;
+    pm_n_dir <= 2'd2;
   end
   else if(l_b == 1'd1)
   begin
-    l <= 1'd1;
-    r <= 1'd0;
-    u <= 1'd0;
-    d <= 1'd0;
+    pm_c_dir <= pm_c_dir;
+    pm_n_dir <= 2'd2;
+  end
+  else if(col != 5'd27 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * row + col + 1] == 6'b000000 && (r_b == 1'd1 || pm_n_dir == 2'd0))
+  begin
+    pm_c_dir <= 2'd0;
+    pm_n_dir <= 2'd0;
+  end
+  else if(col == 5'd27 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * row + col - 27] == 6'b000000 && (r_b == 1'd1 || pm_n_dir == 2'd0))
+  begin
+    pm_c_dir <= 2'd0;
+    pm_n_dir <= 2'd0;
   end
   else if(r_b == 1'd1)
   begin
-    l <= 1'd0;
-    r <= 1'd1;
-    u <= 1'd0;
-    d <= 1'd0;
+    pm_c_dir <= pm_c_dir;
+    pm_n_dir <= 2'd0;
+  end
+  else if(row != 5'd0 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * (row - 1) + col] == 6'b000000 && (u_b == 1'd1 || pm_n_dir == 2'd3))
+  begin
+    pm_c_dir <= 2'd3;
+    pm_n_dir <= 2'd3;
+  end
+  else if(row == 5'd0 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * (row + 30) + col] == 6'b000000 && (u_b == 1'd1 || pm_n_dir == 2'd3))
+  begin
+    pm_c_dir <= 2'd3;
+    pm_n_dir <= 2'd3;
   end
   else if(u_b == 1'd1)
   begin
-    l <= 1'd0;
-    r <= 1'd0;
-    u <= 1'd1;
-    d <= 1'd0;
+    pm_c_dir <= pm_c_dir;
+    pm_n_dir <= 2'd3;
+  end
+  else if(row != 5'd30 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * (row + 1) + col] == 6'b000000 && (d_b == 1'd1 || pm_n_dir == 2'd1))
+  begin
+    pm_c_dir <= 2'd1;
+    pm_n_dir <= 2'd1;
+  end
+  else if(row == 5'd30 && p_col == 3'd3 && p_row == 3'd3 && map_tile[28 * (row - 30) + col] == 6'b000000 && (d_b == 1'd1 || pm_n_dir == 2'd1))
+  begin
+    pm_c_dir <= 2'd1;
+    pm_n_dir <= 2'd1;
   end
   else if(d_b == 1'd1)
   begin
-    l <= 1'd0;
-    r <= 1'd0;
-    u <= 1'd0;
-    d <= 1'd1;
+    pm_c_dir <= pm_c_dir;
+    pm_n_dir <= 2'd1;
   end
   
 end
     
   
 
-always @ (posedge sys_clk or negedge sys_rst_n)
+/*always @ (posedge sys_clk or negedge sys_rst_n)
 begin
   if(!sys_rst_n)
     pm_state <= 2'b0;
@@ -98,9 +128,9 @@ begin
     pm_state <= 2'b1;
     col <= 5'd13;
     row <= 5'd23;
-    p_col <= 3'd7;
-    p_col <= 3'd0;
-    l <= 1'd1;  
+    p_col <= 3'd3;
+    p_row <= 3'd3;
+    pm_c_dir <= 2'd2;  
   end
   else
   begin
@@ -110,7 +140,7 @@ begin
     p_col <= p_col;
     p_row <= p_row;
   end
-end
+end*/
 
 parameter   PERIOD  = 28'd50_000000;
 parameter   DUTY    = 28'd12_500000;
@@ -149,57 +179,108 @@ begin
   begin
     col <= 5'd13;
     row <= 5'd23;
-    p_col <= 4'd4;
-    p_col <= 4'd4;
+    p_col <= 3'd3;
+    p_col <= 3'd3;
     c <= 4'd0;
   end
-  else if(d == 1'd1 && pm_state == 1'd1)
+  else if(p_col == 3'd3 && p_row == 3'd3)
   begin
-    if(p_row == 4'd7 || p_row == 4'd8)
+    if(col != 27 && pm_c_dir == 2'd0 && map_tile[28 * row + col + 1] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+    else if(col == 27 && pm_c_dir == 2'd0 && map_tile[28 * row + col - 27] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+    else if(row != 5'd30 && pm_c_dir == 2'd1 && map_tile[28 * (row + 1) + col] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+    else if(row == 5'd30 && pm_c_dir == 2'd1 && map_tile[28 * (row - 30) + col] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+    else if(col != 5'd0 && pm_c_dir == 2'd1 && map_tile[28 * row + col - 1] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+    else if(col == 5'd0 && pm_c_dir == 2'd1 && map_tile[28 * row + col + 27] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+    else if(row != 0 && pm_c_dir == 2'd3 && map_tile[28 * (row - 1) + col] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+    else if(row == 0 && pm_c_dir == 2'd3 && map_tile[28 * (row + 30) + col] != 6'b000000)
+    begin
+      row <= row;
+      col <= col;
+      p_row <= p_row;
+      p_col <= p_col;
+    end
+  end
+  else if(pm_c_dir == 2'd1 && map_tile[28 * (row + 1) + col] == 6'b000000 && pm_state == 1'd1)
+  begin
+    if(p_row == 3'd7)
     begin 
-      p_row <= 4'd0;
+      p_row <= p_row + 3'd1;
       row <= row + 3'd1;
     end
-    else if(p_row < 4'd8)
-      p_row <= p_row + 4'd1;
     else
-      p_row <= 4'd15 - p_row + 4'd1;
+      p_row <= p_row + 3'd1;
   end
-  else if(u == 1'd1 && pm_state == 1'd1)
+  else if(pm_c_dir == 2'd3 && map_tile[28 * (row - 1) + col] == 6'b000000 && pm_state == 1'd1)
   begin
-    if(p_row == 4'd0 || p_row == 4'd15) 
+    if(p_row == 4'd0) 
     begin
-      p_row <= 4'd8;
+      p_row <= p_row - 3'd1;
       row <= row - 3'd1;
     end
-    else if(p_row > 4'd7)
-      p_row <= p_row + 4'd1;
     else
-      p_row <= 4'd15 - p_row + 4'd1;
+      p_row <= p_row - 3'd1;
   end
-  else if(l == 1'd1 && pm_state == 1'd1)
+  else if(pm_c_dir == 2'd2 && map_tile[28 * row + col - 1] == 6'b000000 && pm_state == 1'd1)
   begin
-    if(p_col == 4'd0 || p_col == 4'd15) 
+    if(p_col == 4'd0) 
     begin
-      p_col <= 4'd8;
+      p_col <= p_col - 3'd1;
       col <= col - 3'd1;
     end
-    else if(p_col > 4'd7)
-      p_col <= p_col + 4'd1;
     else
-      p_col <= 4'd15 - p_col + 4'd1;
+      p_col <= p_col - 4'd1;
   end
-  else if(r == 1'd1 && pm_state == 1'd1)
+  else if(pm_c_dir == 2'd0 && map_tile[28 * row + col + 1] == 6'b000000 && pm_state == 1'd1)
   begin
-    if(p_col == 4'd7 || p_col == 4'd8) 
+    if(p_col == 4'd7) 
     begin
       p_col <= 4'd0;
       col <= col + 3'd1;
     end
-    else if(p_col < 4'd8)
-      p_col <= p_col + 4'd1;
     else
-      p_col <= 4'd15 - p_col + 4'd1;
+      p_col <= p_col + 4'd1;
   end
   else if(pm_state == 2'd1)
   begin 
