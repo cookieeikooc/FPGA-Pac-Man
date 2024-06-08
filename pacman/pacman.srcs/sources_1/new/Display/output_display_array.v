@@ -41,7 +41,7 @@ module output_display_array (
         .px_row(board_px_row_counter),
         .px_col(board_px_col_counter),
         .ready(board_ready),
-        .rgb(board_rgb)
+        .rgb_720p(board_rgb)
     );
 
     //Read Cache and Scale

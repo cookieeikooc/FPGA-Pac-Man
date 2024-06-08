@@ -25,16 +25,10 @@ module vga (
    localparam     VGA_Y_PIXELS = 720;
     
    //clock wizard
-   wire reset;
-   wire locked;
-   assign reset = 1'b0;
    clk_wiz_0 instance_name
    (
     // Clock out ports
     .clk_out1(vga_clk),     // output clk_out1
-    // Status and control signals
-    .reset(reset),
-    .locked(locked),
     // Clock in ports
     .clk_in1(clk100_i)      // input clk_in1
    );

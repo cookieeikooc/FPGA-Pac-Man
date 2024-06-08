@@ -37,7 +37,7 @@ module map_ROM_address_decoder (
 
     assign tile_row = tile_r;
     assign tile_col = tile_c;
-    assign px_row = px[7:4];
-    assign px_col = px[3:0];
+    assign px_row = px[5:3];
+    assign px_col = px[2:0];
 
 endmodule
