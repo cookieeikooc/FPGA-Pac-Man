@@ -10,7 +10,7 @@ module vga (
    //internal signals
    wire           vga_clk;
    reg [10:0]     vga_pix_x = 0;
-   reg [9:0]     vga_pix_y = 0;
+   reg [9:0]      vga_pix_y = 0;
    reg            vga_hs;
    reg            vga_vs;
    

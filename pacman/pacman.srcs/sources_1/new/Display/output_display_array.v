@@ -16,10 +16,10 @@ module output_display_array (
     reg [7:0] board_px_row_counter = 8'd0;
     reg [7:0] board_px_col_counter = 8'd0;
     always @(posedge clk) begin
-        if (board_ready == 1'b1 & h_sync == 1'b0 & v_sync == 1'b0) begin
+        if (board_ready == 1'b1 & row >= 11'd1280) begin
             if (board_px_col_counter == 8'd223) begin
                 board_px_col_counter <= 8'd0;
-                if (board_px_row_counter == 8'd248) begin
+                if (board_px_row_counter == 8'd247) begin
                     board_px_row_counter <= 8'd0;
                 end
                 else begin
@@ -47,11 +47,8 @@ module output_display_array (
     //Read Cache and Scale
     reg [11:0] rgb[0:287][0:223];
     always @(posedge clk) begin
-        if (board_ready == 1'b1 & h_sync == 1'b0 & v_sync == 1'b0) begin
-            rgb[128 + board_px_row_counter * 2][784 + board_px_col_counter * 2] <= board_rgb;
-            rgb[128 + board_px_row_counter * 2][784 + board_px_col_counter * 2 + 1] <= board_rgb;
-            rgb[128 + board_px_row_counter * 2 + 1][784 + board_px_col_counter * 2] <= board_rgb;
-            rgb[128 + board_px_row_counter * 2 + 1][784 + board_px_col_counter * 2 + 1] <= board_rgb;
+        if (board_ready == 1'b1 & row >= 11'd1280) begin
+            rgb[24 + board_px_row_counter][board_px_col_counter] <= board_rgb;
         end
         else begin
             rgb <= rgb;
