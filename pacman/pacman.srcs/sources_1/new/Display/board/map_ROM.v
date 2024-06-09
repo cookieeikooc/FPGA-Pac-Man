@@ -38,6 +38,4 @@ module map_ROM (
             tile_row == 12 & (tile_col == 13 | tile_col == 14) & map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}] == 1'b1 ? 12'hFBF :
             tile_row == 12 & (tile_col == 13 | tile_col == 14) & map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}] == 1'b0 ? 12'h000 :
             map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}] == 1'b1 ? 12'h22F : 12'h000;
-            //map_tile_px[map_tile[tile_row * 31 + tile_col]][{tile_px_row, tile_px_col}]
-            //map_tile_px[][]
 endmodule
