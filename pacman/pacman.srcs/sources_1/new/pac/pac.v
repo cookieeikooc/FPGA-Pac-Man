@@ -70,10 +70,6 @@ module pac(
                 score <= score + 9'd1;
             end
         end
-        else begin
-            pac[{mapped_col, mapped_row}] <= pac[{mapped_col, mapped_row}];
-            score <= score;
-        end
     end
 
     assign pac_existance = pac[{pac_col, pac_row}];

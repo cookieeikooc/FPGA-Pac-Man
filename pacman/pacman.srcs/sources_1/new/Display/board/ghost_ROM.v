@@ -17,19 +17,19 @@ module ghost_ROM (
     end
 
     reg [11:0] palette1[0:3];
-    initial begin
+    always@(*) begin
         palette1[0] = 12'hF00;
         palette1[1] = 12'hFBF;
         palette1[2] = 12'h0FF;
         palette1[3] = 12'hFB5;
     end
     reg [11:0] palette2[0:2];
-    initial begin
+    always@(*) begin
         palette2[0] = 12'h22F;
         palette2[1] = 12'hDDF;
     end
     reg [11:0] palette3[0:2];
-    initial begin
+    always@(*) begin
         palette3[0] = 12'hFBA;
         palette3[1] = 12'hF00;
     end
