@@ -10,7 +10,7 @@ module eat_score_ROM (
 
     reg ROM[0:1023];
     initial begin
-        $readmemh("eat_score_ROM.mem", ROM);
+        $readmemb("eat_score_ROM.mem", ROM);
     end
 
     assign rgb =

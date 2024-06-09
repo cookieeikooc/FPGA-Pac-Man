@@ -400,7 +400,7 @@ module board_display_cache (
     //Pac Existance Signal
     reg [4:0] pac_coordinate[0:487];
     initial begin
-        $readmemh("pac_coordinate_ROM.mem", pac_coordinate);
+        $readmemb("pac_coordinate_ROM.mem", pac_coordinate);
     end
     wire [4:0] pac_row;
     wire [4:0] pac_col;

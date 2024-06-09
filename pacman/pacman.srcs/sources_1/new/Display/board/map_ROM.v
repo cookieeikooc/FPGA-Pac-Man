@@ -15,13 +15,13 @@ module map_ROM (
     //Map Telmplate
     reg [5:0] map_tile[0:867];
     initial begin
-        $readmemh("map_ROM.mem", map_tile);
+        $readmemb("map_ROM.mem", map_tile);
     end
 
     //Tile ROM
     reg [0:63] map_tile_px[0:33];
     initial begin
-        $readmemh("map_tile_ROM.mem", map_tile_px);
+        $readmemb("map_tile_ROM.mem", map_tile_px);
     end
     /*
         00: empty       08: ┘           16: ╝           24: ]           32: ║ right 

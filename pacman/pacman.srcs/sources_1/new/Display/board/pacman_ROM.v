@@ -11,7 +11,7 @@ module pacman_ROM (
 
     reg ROM [0:5375];
     initial begin
-        $readmemh("pacman_ROM.mem", ROM);
+        $readmemb("pacman_ROM.mem", ROM);
     end
 
     assign rgb = ROM[{frame, tile_px_row, tile_px_col}] == 1'b1 ? 12'hFF0 : 12'h000;

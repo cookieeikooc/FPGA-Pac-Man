@@ -10,7 +10,7 @@ module pac_ROM (
 
     reg ROM[0:127];
     initial begin
-        $readmemh("pac_ROM.mem", ROM);
+        $readmemb("pac_ROM.mem", ROM);
     end
 
     assign rgb =
