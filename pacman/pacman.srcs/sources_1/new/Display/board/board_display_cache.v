@@ -18,6 +18,7 @@ module board_display_cache (
     input [2:0] pacman_px_shift,
     input [1:0] pacman_facing,
 
+    /*
     input [4:0] bliky_tile_row,
     input [4:0] bliky_tile_col,
     input [2:0] bliky_px_shift,
@@ -42,6 +43,7 @@ module board_display_cache (
     input fruit_exist,
 
     input [1:0] score_num
+    */
 );
 
 
