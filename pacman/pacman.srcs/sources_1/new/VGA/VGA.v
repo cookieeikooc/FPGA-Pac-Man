@@ -88,8 +88,6 @@ module vga (
    assign pix_y = vga_pix_y;
    output_display_array (
       .clk_vga(vga_clk),
-      .h_sync(vga_hs),
-      .v_sync(vga_vs),
       .row(pix_y),
       .col(pix_x),
       .rgb_720p(rgb)

@@ -3,8 +3,6 @@
 module output_display_array (
     input clk_cache,
     input clk_vga, //74.250 MHz
-    input h_sync,
-    input v_sync,
     input [9:0] row,
     input [10:0] col,
     output [11:0] rgb_720p
