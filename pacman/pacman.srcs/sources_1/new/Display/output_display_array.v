@@ -63,12 +63,7 @@ module output_display_array (
             rgb_out <= 12'h000;
         end
     end
-    
-    always @(posedge clk_vga) begin
-        if 
-    end
 
     assign rgb_720p = rgb_out;
-
 
 endmodule
