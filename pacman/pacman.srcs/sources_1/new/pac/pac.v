@@ -88,7 +88,7 @@ module pac(
     wire [9:0] mem_raddr1 = {mapped_col, mapped_row};
     wire [9:0] mem_raddr2 = {pac_col, pac_row};
     wire       pac        = mem_out1;
-    wire       clr_pac    = ((maaped_row == 5'd3) | (mapped_row == 5'd23)) & ((mapped_col == 5'd1) | (mapped_col == 5'd26));
+    wire       clr_pac    = ((mapped_row == 5'd3) | (mapped_row == 5'd23)) & ((mapped_col == 5'd1) | (mapped_col == 5'd26));
     wire       mem_wr     = (pac == 1'b1); 
     wire       mem_wdata1 = 1'b0;
     wire [8:0] score_next = score + (pac ? (clr_pac ? 9'd5 : 9'd1) : 9'd0);
