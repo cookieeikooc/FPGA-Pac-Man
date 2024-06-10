@@ -583,7 +583,7 @@ module board_display_cache (
     always @(posedge clk_setup) begin
         case (current_state)
             MAP: begin
-                rgb[{map_tile_row, map_px_row}*BOARD_WIDTH + {map_tile_col, map_px_col}] <= map_rgb;
+                rgb[{map_tile_row, map_px[5:3]}*BOARD_WIDTH + {map_tile_col, map_px[2:0]}] <= map_rgb;
             end
             PAC: begin
                 if (pac_exist) begin
