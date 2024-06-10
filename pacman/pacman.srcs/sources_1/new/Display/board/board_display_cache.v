@@ -436,10 +436,16 @@ module board_display_cache (
     wire map_count_reset;
     assign map_count_reset = refresh;
     //input wire
+    wire [4:0] map_tile_row;
+    wire [4:0] map_tile_col;
+    wire [5:0] map_px;
     wire [11:0] map_rgb;
     map_ROM (
         .count_rst(map_count_reset),
         .px_clk(clk_setup),
+        .tile_row_out(map_tile_row),
+        .tile_col_out(map_tile_col),
+        .px_out(map_px),
         .rgb(map_rgb)
     );
 

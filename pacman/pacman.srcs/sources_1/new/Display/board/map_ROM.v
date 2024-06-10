@@ -3,6 +3,9 @@
 module map_ROM (
     input count_rst, //high at px_clk negedge to reset
     input px_clk, //detect negedge
+    output [4:0] tile_row_out,
+    output [4:0] tile_col_out,
+    output [5:0] px_out,
     output [11:0] rgb //three 4-bit Hexadecimal numbers
 );
 
@@ -73,6 +76,8 @@ module map_ROM (
         end
     end
 
+    assign tile_row_out = tile_row;
+    assign tile_col_out = tile_col;
     assign rgb = rgb_out;
 
 endmodule
