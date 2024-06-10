@@ -8,7 +8,7 @@ module pac_ROM (
     output [11:0] rgb
 );
 
-    reg ROM[0:127];
+    reg [0:0] ROM[0:127];
     initial begin
         $readmemb("pac_ROM.mem", ROM);
     end
