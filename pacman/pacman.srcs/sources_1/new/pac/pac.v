@@ -81,13 +81,14 @@ module pac(
     initial begin
         $readmemb("pac_init.mem", mem);
     end
-    wire       mem_out1; //internal read
-    wire       mem_out2; //external read
+    reg       mem_out1; //internal read
+    reg       mem_out2; //external read
 
     wire [9:0] mem_waddr1 = {mapped_col, mapped_row};
     wire [9:0] mem_raddr1 = {mapped_col, mapped_row};
     wire [9:0] mem_raddr2 = {pac_col, pac_row};
-    wire       pac        = mem_out1;
+    wire       pac;
+    assign pac = mem_out1;
     wire       clr_pac    = ((mapped_row == 5'd3) | (mapped_row == 5'd23)) & ((mapped_col == 5'd1) | (mapped_col == 5'd26));
     wire       mem_wr     = (pac == 1'b1); 
     wire       mem_wdata1 = 1'b0;
@@ -107,8 +108,14 @@ module pac(
     if (mem_wr)
         mem[mem_waddr1] <= mem_wdata1;
 
-    assign mem_out1 = mem[mem_raddr1];
-    assign mem_out2 = mem[mem_raddr2];
+    reg mem_sig1 = 1'b1;
+    reg mem_sig2 = 1'b1;
+    always@(posedge clk) begin
+        if (mem_sig1)
+            mem_out1 <= mem[mem_raddr1];
+        if (mem_sig2)
+            mem_out2 <= mem[mem_raddr2];
+    end
     //end of NormanHsieh
 
     assign pac_existance = mem_out2;
