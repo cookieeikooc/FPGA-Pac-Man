@@ -8,13 +8,10 @@ module pac_ROM (
     output [11:0] rgb
 );
 
-    (*rom_style = "block" *) reg ROM[0:127];
+    reg ROM[0:127];
     initial begin
         $readmemb("pac_ROM.mem", ROM);
     end
-
-    wire [7:0] ROM_addr = {energizers, flash_frame, tile_px_row, tile_px_col};
-    wire ROM_read = ROM[ROM_addr];
 
     assign rgb =
         energizers == 1'b0 & ROM_read == 1'b1 ? 12'hFBA :
