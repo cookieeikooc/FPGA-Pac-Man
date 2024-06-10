@@ -47,7 +47,7 @@ module output_display_array (
     );
 
     //Read Cache and Scale
-    (*ram_style = "block"*) reg [11:0] rgb[0:64511];
+    (*ram_style = "distributed"*) reg [11:0] rgb[0:64511];
     wire write_en = board_ready == 1'b1 & row >= 10'd720 ? 1'b1 : 1'b0;
     wire read_en = row < 10'd720 & col < 11'd1280 ? 1'b1 : 1'b0;
     always @(posedge clk_cache) begin
