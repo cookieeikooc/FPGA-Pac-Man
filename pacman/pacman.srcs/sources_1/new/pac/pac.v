@@ -54,7 +54,8 @@ module pac(
         end
     end
 
-    (*rom_style = "block" *)reg pac[0:895];
+    /*
+    reg pac[0:895];
     reg [8:0] score = 9'd0;
     initial begin
         $readmemb("pac_init.mem", pac);
@@ -72,7 +73,44 @@ module pac(
         end
     end
 
-    assign pac_existance = pac[{pac_col, pac_row}];
+    */
+
+    //By NormanHsieh
+    (*ram_style="distributed"*) reg mem[0:895];
+    initial begin
+        $readmemb("pac_init.mem", mem);
+    end
+    wire       mem_out1; //internal read
+    wire       mem_out2; //external read
+
+    wire [9:0] mem_waddr1 = {mapped_col, mapped_row};
+    wire [9:0] mem_raddr1 = {mapped_col, mapped_row};
+    wire [9:0] mem_raddr2 = {pac_col, pac_row};
+    wire       pac        = mem_out1;
+    wire       clr_pac    = ((maaped_row == 5'd3) | (mapped_row == 5'd23)) & ((mapped_col == 5'd1) | (mapped_col == 5'd26));
+    wire       mem_wr     = (pac == 1'b1); 
+    wire       mem_wdata1 = 1'b0;
+    wire [8:0] score_next = score + (pac ? (clr_pac ? 9'd5 : 9'd1) : 9'd0);
+
+    assign pac_existance = mem_out2;
+    assign eaten_pac_num = score;
+    
+    always @(posedge clk or posedge reset)
+    if (reset)
+        score <= 9'd0;
+    else if (pac)
+        score <= score_next;
+
+    ///// RAMbehavior here
+    always @(posedge clk)
+    if (mem_wr)
+        mem[mem_waddr1] <= mem_wdata1;
+
+    assign mem_out1 = mem[mem_raddr1];
+    assign mem_out2 = mem[mem_raddr2];
+    //end of NormanHsieh
+
+    assign pac_existance = mem_out2;
     assign eaten_pac_num = score;
 
 endmodule
