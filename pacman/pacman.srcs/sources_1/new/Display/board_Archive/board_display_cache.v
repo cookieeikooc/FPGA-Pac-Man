@@ -435,11 +435,26 @@ module board_display_cache (
     //output wire
     wire map_count_reset;
     assign map_count_reset = refresh;
+    //wiring wire
+    wire [4:0] map_tile_row;
+    wire [4:0] map_tile_col;
+    wire [2:0] map_px_row;
+    wire [2:0] map_px_col;
+    map_ROM_address_decoder (
+        .count_rst(map_count_reset),
+        .px_clk(clk_setup),
+        .tile_row(map_tile_row),
+        .tile_col(map_tile_col),
+        .px_row(map_px_row),
+        .px_col(map_px_col)
+    );
     //input wire
     wire [11:0] map_rgb;
     map_ROM (
-        .count_rst(map_count_reset),
-        .px_clk(clk_setup),
+        .tile_row(map_tile_row),
+        .tile_col(map_tile_col),
+        .tile_px_row(map_px_row),
+        .tile_px_col(map_px_col),
         .rgb(map_rgb)
     );
 
