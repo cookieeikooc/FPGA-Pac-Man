@@ -616,7 +616,7 @@ module board_display_cache (
         endcase
     end
     reg [11:0] rgb_out;
-    always@(negedge clk_chche) begin
+    always@(negedge clk_cache) begin
         if (current_state == READY) begin
             rgb_out <= rgb[px_row * BOARD_WIDTH + px_col];
         end
