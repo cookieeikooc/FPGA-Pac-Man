@@ -16,7 +16,7 @@ module board_display_cache (
     input [4:0] pacman_tile_row,
     input [4:0] pacman_tile_col,
     input [2:0] pacman_px_shift,
-    input [1:0] pacman_facing,
+    input [1:0] pacman_facing
 
     /*
     input [4:0] bliky_tile_row,
