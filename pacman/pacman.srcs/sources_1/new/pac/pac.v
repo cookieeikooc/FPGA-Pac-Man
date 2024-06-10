@@ -54,7 +54,7 @@ module pac(
         end
     end
 
-    reg pac[0:895];
+    (*rom_style = "block" *)reg pac[0:895];
     reg [8:0] score = 9'd0;
     initial begin
         $readmemb("pac_init.mem", pac);

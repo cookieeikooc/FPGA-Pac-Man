@@ -9,7 +9,7 @@ module pacman_ROM (
     output [11:0] rgb
 );
 
-    reg ROM [0:5375];
+    (*rom_style = "block" *)reg ROM [0:5375];
     initial begin
         $readmemb("pacman_ROM.mem", ROM);
     end
