@@ -14,8 +14,8 @@ module pac_ROM (
     end
 
     assign rgb =
-        energizers == 1'b0 & ROM_read == 1'b1 ? 12'hFBA :
-        energizers == 1'b0 & ROM_read == 1'b0 ? 12'h000 :
+        energizers == 1'b0 & ROM[{1'b0, tile_px_row, tile_px_col}] == 1'b1 ? 12'hFBA :
+        energizers == 1'b0 & ROM[{1'b0, tile_px_row, tile_px_col}] == 1'b0 ? 12'h000 :
         energizers == 1'b1 & flash_frame == 1'b0 ? 12'h000 :
-        energizers == 1'b1 & flash_frame == 1'b1 & ROM_read == 1'b1 ? 12'hFBA : 12'h000;
+        energizers == 1'b1 & flash_frame == 1'b1 & ROM[{1'b1, tile_px_row, tile_px_col}] == 1'b1 ? 12'hFBA : 12'h000;
 endmodule
