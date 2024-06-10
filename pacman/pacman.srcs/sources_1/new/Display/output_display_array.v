@@ -45,18 +45,14 @@ module output_display_array (
     );
 
     //Read Cache and Scale
-    (*ram_style = "block"*) reg [11:0] rgb[0:287][0:223];
-    reg [11:0] rgb_out;
+    reg [11:0] rgb[0:64511];
     always @(posedge clk) begin
         if (board_ready == 1'b1 & row >= 10'd720) begin
-            rgb[24 + board_px_row_counter][board_px_col_counter] <= board_rgb;
-        end
-        else begin
-            rgb_out <= rgb[row][col];
+            rgb[(24 + board_px_row_counter)*224 + board_px_col_counter] <= board_rgb;
         end
     end
 
-    assign rgb_720p = rgb_out;
+    assign rgb_720p = rgb[row*224 + col];
 
 
 endmodule
