@@ -492,7 +492,7 @@ module board_display_cache (
     );
     //output wire
     wire [2:0] current_fruit_type;
-    //assign current_fruit_type =
+    assign current_fruit_type = 3'd0; //TEMP VAL
     //input wire
     wire [11:0] fruit_rgb;
     fruit_ROM (
@@ -521,10 +521,10 @@ module board_display_cache (
     wire current_ghost_frame;
     wire curent__ghost_flash_frame;
     wire [1:0] current_ghost;
-    //assign current_facing =
-    //assign fright_signal =
+    assign current_facing = 2'd0; //TEMP VAL
+    assign fright_signal = 1'b0; //TEMP VAL
     assign current_ghost_frame = ghost_frame;
-    //assign curent__ghost_flash_frame = 
+    assign curent__ghost_flash_frame = 1'b0; //TEMP VAL
     assign current_ghost =
         current_state == BLINKY ? 2'd0 :
         current_state == PINKY ? 2'd1 :
@@ -547,7 +547,6 @@ module board_display_cache (
     //output wire
     wire pacman_count_reset;
     assign pacman_count_reset = pacman_count_rst;
-    //assign pacman_px_clk_out =
     //wiring wire
     wire [3:0] pacman_px_row;
     wire [3:0] pacman_px_col;

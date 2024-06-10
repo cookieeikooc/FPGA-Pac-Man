@@ -39,6 +39,7 @@ module map_ROM (
     reg [4:0] tile_col = 5'd0;
     reg [5:0] px = 6'd0;
     reg [11:0] rgb_out = 12'h000;
+    reg [5:0] current_map_tile;
     always @(negedge px_clk) begin
         //map_ROM_address_decoder
         if (count_rst == 1) begin
@@ -62,13 +63,14 @@ module map_ROM (
             end
         end
         //Read
-        if (tile_row == 5'd12 & (tile_col == 13 | tile_col == 14) & map_tile_px[map_tile[tile_row * 31 + tile_col]][px] == 1'b1) begin
+        current_map_tile = map_tile[tile_row * 31 + tile_col];
+        if (tile_row == 5'd12 & (tile_col == 13 | tile_col == 14) & map_tile_px[current_map_tile][px] == 1'b1) begin
             rgb_out = 12'hFBF;
         end
-        else if (tile_row == 5'd12 & (tile_col == 13 | tile_col == 14) & map_tile_px[map_tile[tile_row * 31 + tile_col]][px] == 1'b0) begin
+        else if (tile_row == 5'd12 & (tile_col == 13 | tile_col == 14) & map_tile_px[current_map_tile][px] == 1'b0) begin
             rgb_out = 12'h000;
         end
-        else if (map_tile_px[map_tile[tile_row * 31 + tile_col]][px] == 1'b1) begin
+        else if (map_tile_px[current_map_tile][px] == 1'b1) begin
             rgb_out = 12'h22F;
         end
         else begin
@@ -78,6 +80,7 @@ module map_ROM (
 
     assign tile_row_out = tile_row;
     assign tile_col_out = tile_col;
+    assign px_out = px;
     assign rgb = rgb_out;
 
 endmodule
