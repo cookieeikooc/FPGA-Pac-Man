@@ -112,7 +112,7 @@ module pac(
        Update |     1           0         1
          Read |     0           1         0
     */
-    (*ram_style = "block"*) reg [0:0] pac_mem[0:895];
+    (*ram_style = "distributed"*) reg [0:0] pac_mem[0:895];
     initial begin
         $readmemb("pac_init.mem", pac_mem);
     end
