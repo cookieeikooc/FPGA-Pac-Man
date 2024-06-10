@@ -48,21 +48,24 @@ module output_display_array (
 
     //Read Cache and Scale
     (*ram_style = "distributed"*) reg [11:0] rgb[0:64511];
+    reg [11:0] rgb_out;
     wire write_en = board_ready == 1'b1 & row >= 10'd720 ? 1'b1 : 1'b0;
     wire read_en = row < 10'd720 & col < 11'd1280 ? 1'b1 : 1'b0;
-    always @(posedge clk_cache) begin
+    wire clk_mem = write_en == 1'b1 ? clk_cache : clk_vga;
+    always @(posedge clk_mem) begin
         if (write_en) begin
             rgb[(24 + board_px_row_counter)*224 + board_px_col_counter] <= board_rgb;
         end
-    end
-    reg [11:0] rgb_out;
-    always @(posedge clk_vga) begin
-        if (read_en) begin
+        else if (read_en) begin
             rgb_out <= rgb[row*224 + col];
         end
         else begin
             rgb_out <= 12'h000;
         end
+    end
+    
+    always @(posedge clk_vga) begin
+        if 
     end
 
     assign rgb_720p = rgb_out;
