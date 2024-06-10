@@ -9,7 +9,7 @@ module pac(
     input [1:0] pacman_facing,
     input [4:0] pac_row,
     input [4:0] pac_col,
-    output setup_finish,
+    output ready,
     output pac_existance,
     output [8:0] eaten_pac_num // +1 for each eaten pac, +5 for each eaten energizer
 );
@@ -187,6 +187,7 @@ module pac(
     end
 
 
+    assign ready = setup_finish;
     assign pac_existance = mem_rout2;
     assign eaten_pac_num = score;
 

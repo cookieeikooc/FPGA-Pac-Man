@@ -1,7 +1,7 @@
 //Bing
 
 module output_display_array (
-    input clk,
+    input clk_cache,
     input clk_vga, //74.250 MHz
     input h_sync,
     input v_sync,
@@ -16,7 +16,7 @@ module output_display_array (
     wire board_ready;
     reg [7:0] board_px_row_counter = 8'd0;
     reg [7:0] board_px_col_counter = 8'd0;
-    always @(posedge clk) begin
+    always @(posedge clk_cache) begin
         if (board_ready == 1'b1 & row >= 10'd720) begin
             if (board_px_col_counter == 8'd223) begin
                 board_px_col_counter <= 8'd0;
@@ -39,6 +39,7 @@ module output_display_array (
 
     wire [11:0] board_rgb;
     board_display_cache (
+        .clk_cache(clk_cache),
         .px_row(board_px_row_counter),
         .px_col(board_px_col_counter),
         .ready(board_ready),
@@ -47,7 +48,7 @@ module output_display_array (
 
     //Read Cache and Scale
     (*ram_style = "block"*) reg [11:0] rgb[0:64511];
-    always @(posedge clk) begin
+    always @(posedge clk_cache) begin
         if (board_ready == 1'b1 & row >= 10'd720) begin
             rgb[(24 + board_px_row_counter)*224 + board_px_col_counter] <= board_rgb;
         end

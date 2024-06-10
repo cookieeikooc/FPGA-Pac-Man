@@ -3,7 +3,8 @@
 //248 * 224
 
 module board_display_cache (
-    input clk,
+    input clk_setup,
+    input clk_cache,
     input clk_60, // 60Hz clock
     input [7:0]px_row,
     input [7:0]px_col,
@@ -42,17 +43,6 @@ module board_display_cache (
 
     input [1:0] score_num
 );
-
-    //PAC
-    //output pac number ; input exist or ont
-    //flash clock
-
-    //PACMAN
-    //input coordinate, facing, state(dead)
-
-
-    //GHOST
-    //input coordinate, facing, state(fright, flash frame), current level(flash frame)
 
 
 ////////////////////////////////////////////////////////////////
@@ -171,7 +161,7 @@ module board_display_cache (
             end
         endcase
     end
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         current_state <= next_state;
     end
 
@@ -181,7 +171,7 @@ module board_display_cache (
 
     //ROM Pixel Signal
     reg [15:0] count_map_px = 16'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == MAP & refresh == 1'b0) begin
             if (count_map_px == 16'd55551) begin
                 count_map_px <= 16'd0;
@@ -195,7 +185,7 @@ module board_display_cache (
         end
     end
     reg [13:0] count_pac_px = 14'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == PAC & pac_count_rst == 1'b0) begin
             if (count_pac_px == 14'd15615) begin
                 count_pac_px <= 14'd0;
@@ -209,7 +199,7 @@ module board_display_cache (
         end
     end
     reg [7:0] count_fruit_px = 8'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == FRUIT & fruit_count_rst == 1'b0) begin
             if (count_fruit_px == 8'd255) begin
                 count_fruit_px <= 8'd0;
@@ -223,7 +213,7 @@ module board_display_cache (
         end
     end
     reg [7:0] count_blinky_px = 8'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == BLINKY & blinky_count_rst == 1'b0) begin
             if (count_blinky_px == 8'd255) begin
                 count_blinky_px <= 8'd0;
@@ -237,7 +227,7 @@ module board_display_cache (
         end
     end
     reg [7:0] count_pinky_px = 8'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == PINKY & pinky_count_rst == 1'b0) begin
             if (count_pinky_px == 8'd255) begin
                 count_pinky_px <= 8'd0;
@@ -251,7 +241,7 @@ module board_display_cache (
         end
     end
     reg [7:0] count_inky_px = 8'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == INKY & inky_count_rst == 1'b0) begin
             if (count_inky_px == 8'd255) begin
                 count_inky_px <= 8'd0;
@@ -265,7 +255,7 @@ module board_display_cache (
         end
     end
     reg [7:0] count_clyde_px = 8'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == CLYDE & clyde_count_rst == 1'b0) begin
             if (count_clyde_px == 8'd255) begin
                 count_clyde_px <= 8'd0;
@@ -279,7 +269,7 @@ module board_display_cache (
         end
     end
     reg [7:0] count_pacman_px = 8'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == PACMAN & pacman_count_rst == 1'b0) begin
             if (count_pacman_px == 8'd255) begin
                 count_pacman_px <= 8'd0;
@@ -293,7 +283,7 @@ module board_display_cache (
         end
     end
     reg [7:0] count_score_px = 8'd0;
-    always @(negedge clk) begin
+    always @(negedge clk_setup) begin
         if (current_state == SCORE & score_count_rst == 1'b0) begin
             if (count_score_px == 8'd255) begin
                 count_score_px <= 8'd0;
@@ -309,7 +299,7 @@ module board_display_cache (
 
 
     //Reset Signal
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_map_px == 16'd55551) begin
             pac_count_rst <= 1'b1;
         end
@@ -317,7 +307,7 @@ module board_display_cache (
             pac_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_pac_px == 14'd15615) begin
             fruit_count_rst <= 1'b1;
         end
@@ -325,7 +315,7 @@ module board_display_cache (
             fruit_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_fruit_px == 8'd255 & fright == 1'b0) begin
             pacman_count_rst <= 1'b1;
         end
@@ -337,7 +327,7 @@ module board_display_cache (
             clyde_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_pacman_px == 8'd255 & fright == 1'b0) begin
             clyde_count_rst <= 1'b1;
         end
@@ -349,7 +339,7 @@ module board_display_cache (
             score_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_clyde_px == 8'd255) begin
             inky_count_rst <= 1'b1;
         end
@@ -357,7 +347,7 @@ module board_display_cache (
             inky_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_inky_px == 8'd255) begin
             pinky_count_rst <= 1'b1;
         end
@@ -365,7 +355,7 @@ module board_display_cache (
             pinky_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_pinky_px == 8'd255) begin
             blinky_count_rst <= 1'b1;
         end
@@ -373,7 +363,7 @@ module board_display_cache (
             blinky_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_blinky_px == 8'd255 & fright == 1'b1) begin
             pacman_count_rst <= 1'b1;
         end
@@ -385,7 +375,7 @@ module board_display_cache (
             score_count_rst <= 1'b0;
         end
     end
-    always @(posedge clk) begin
+    always @(posedge clk_setup) begin
         if (count_score_px == 8'd255) begin
             done <= 1'b1;
         end
@@ -452,7 +442,7 @@ module board_display_cache (
     wire [2:0] map_px_col;
     map_ROM_address_decoder (
         .count_rst(map_count_reset),
-        .px_clk(clk),
+        .px_clk(clk_setup),
         .tile_row(map_tile_row),
         .tile_col(map_tile_col),
         .px_row(map_px_row),
@@ -477,7 +467,7 @@ module board_display_cache (
     wire [2:0] pac_px_col;
     pac_ROM_address_decoder (
         .count_rst(pac_count_reset),
-        .px_clk(clk),
+        .px_clk(clk_setup),
         .px_row(pac_px_row),
         .px_col(pac_px_col)
     );
@@ -505,7 +495,7 @@ module board_display_cache (
     wire [3:0] fruit_px_col;
     fruit_ROM_address_decoder (
         .count_rst(fruit_count_reset),
-        .px_clk(clk),
+        .px_clk(clk_setup),
         .px_row(fruit_px_row),
         .px_col(fruit_px_col)
     );
@@ -530,7 +520,7 @@ module board_display_cache (
     wire [3:0] ghost_px_col;
     ghost_ROM_address_decoder (
         .count_rst(ghost_count_reset),
-        .px_clk(clk),
+        .px_clk(clk_setup),
         .px_row(ghost_px_row),
         .px_col(ghost_px_col)
     );
@@ -572,7 +562,7 @@ module board_display_cache (
     wire [3:0] pacman_px_col;
     pacman_ROM_address_decoder (
         .count_rst(pacman_count_reset),
-        .px_clk(clk),
+        .px_clk(clk_setup),
         .px_row(pacman_px_row),
         .px_col(pacman_px_col)
     );
@@ -598,16 +588,16 @@ module board_display_cache (
     //mearge all layers
     //editing...
     parameter BOARD_HIGHT = 248, BOARD_WIDTH = 224;
-    reg [11:0] rgb[0:BOARD_HIGHT-1][0:BOARD_WIDTH-1];
-    always @(posedge clk) begin
+    reg [11:0] rgb[0:BOARD_HIGHT * BOARD_WIDTH - 1];
+    always @(posedge clk_setup) begin
         case (current_state)
             MAP: begin
-                rgb[{map_tile_row, map_px_row}][{map_tile_col, map_px_col}] <= map_rgb;
+                rgb[{map_tile_row, map_px_row}*BOARD_WIDTH + {map_tile_col, map_px_col}] <= map_rgb;
             end
             PAC: begin
                 if (pac_exist) begin
                     if (pac_rgb != 12'h000) begin
-                        rgb[{pac_row, pac_px_row}][{pac_col, pac_px_col}] <= pac_rgb;
+                        rgb[{pac_row, pac_px_row}*BOARD_WIDTH + {pac_col, pac_px_col}] <= pac_rgb;
                     end
                 end
             end /*
@@ -625,8 +615,17 @@ module board_display_cache (
             end */
         endcase
     end
+    reg [11:0] rgb_out;
+    always@(negedge clk_chche) begin
+        if (current_state == READY) begin
+            rgb_out <= rgb[px_row * BOARD_WIDTH + px_col];
+        end
+        else begin
+            rgb_out <= 12'h000;
+        end
+    end
 
     //output
-    assign rgb_720p = rgb[px_row][px_col];
+    assign rgb_720p = rgb_out;
 
 endmodule
