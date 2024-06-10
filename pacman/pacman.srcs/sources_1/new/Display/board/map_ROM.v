@@ -11,13 +11,13 @@ module map_ROM (
     //################################################################################//
 
     //Map Telmplate
-    reg [5:0] map_tile[0:867];
+    (*ram_style = "block"*) reg [5:0] map_tile[0:867];
     initial begin
         $readmemb("map_ROM.mem", map_tile);
     end
 
     //Tile ROM
-    reg [0:63] map_tile_px[0:33];
+    (*ram_style = "block"*) reg [0:63] map_tile_px[0:33];
     initial begin
         $readmemb("map_tile_ROM.mem", map_tile_px);
     end
