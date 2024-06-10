@@ -36,8 +36,8 @@ module output_display_array (
     end
 
     wire [11:0] board_rgb;
-    wire [9:0] board_px_row;
-    wire [10:0] board_px_col;
+    wire [7:0] board_px_row;
+    wire [7:0] board_px_col;
     assign board_px_row = board_px_row_counter;
     assign board_px_col = board_px_col_counter;
     board_display_cache (
