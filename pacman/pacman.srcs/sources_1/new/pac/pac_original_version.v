@@ -54,7 +54,6 @@ module pac(
         end
     end
 
-    /*
     reg pac[0:895];
     reg [8:0] score = 9'd0;
     initial begin
@@ -73,53 +72,7 @@ module pac(
         end
     end
 
-    */
-
-    reg [8:0] score = 9'd0;
-    //By NormanHsieh
-    (*ram_style="block"*) reg [0:0] mem[0:895];
-    initial begin
-        $readmemb("pac_init.mem", mem);
-    end
-    reg       mem_out1; //internal read
-    reg       mem_out2; //external read
-
-    wire [9:0] mem_waddr1 = {mapped_col, mapped_row};
-    wire [9:0] mem_raddr1 = {mapped_col, mapped_row};
-    wire [9:0] mem_raddr2 = {pac_col, pac_row};
-    wire       pac;
-    assign pac = mem_out1;
-    wire       clr_pac    = ((mapped_row == 5'd3) | (mapped_row == 5'd23)) & ((mapped_col == 5'd1) | (mapped_col == 5'd26));
-    wire       mem_wr     = (pac == 1'b1); 
-    wire       mem_wdata1 = 1'b0;
-    wire [8:0] score_next = score + (pac ? (clr_pac ? 9'd5 : 9'd1) : 9'd0);
-    
-    always @(posedge clk or posedge reset)
-    if (reset)
-        score <= 9'd0;
-    else if (pac)
-        score <= score_next;
-
-    ///// RAMbehavior here
-
-    wire clk_a = clk;
-    wire clk_b = ~clk;
-    wire mem_sig1 = 1'b1;
-    wire mem_sig2 = 1'b1;
-    always@(posedge clk_a) begin
-        if (mem_sig1)
-            mem_out1 <= mem[mem_raddr1];
-    end
-    always@(posedge clk_b) begin
-        if (mem_sig2)
-            mem_out2 <= mem[mem_raddr2];
-    end
-    always @(posedge clk_a)
-    if (mem_wr)
-        mem[mem_waddr1] <= mem_wdata1;
-    //end of NormanHsieh
-
-    assign pac_existance = mem_out2;
+    assign pac_existance = pac[{pac_col, pac_row}];
     assign eaten_pac_num = score;
 
 endmodule
