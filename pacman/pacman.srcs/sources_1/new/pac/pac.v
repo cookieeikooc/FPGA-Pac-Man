@@ -75,6 +75,7 @@ module pac(
 
     */
 
+    reg [8:0] score = 9'd0;
     //By NormanHsieh
     (*ram_style="distributed"*) reg mem[0:895];
     initial begin
