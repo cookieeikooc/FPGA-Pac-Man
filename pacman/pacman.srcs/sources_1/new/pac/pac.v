@@ -60,7 +60,7 @@ module pac(
     parameter IDLE = 2'd0, SETUP = 2'd1, READY = 2'd2;
     reg [1:0] current_state, next_state;
     reg setup_finish = 1'b0;
-    initail begin
+    initial begin
         current_state = IDLE;
     end
     always @(*) begin
@@ -119,8 +119,8 @@ module pac(
 
     reg mem_rout1; //internal: currently stored value to enable write
     reg mem_rout2; //external: currently stored value
-    wire [9:0] mem_rwaddr = {mapped_col, mapped_row}
-    wire [9:0] mem_raddr = {pac_col, pac_row}
+    wire [9:0] mem_rwaddr = {mapped_col, mapped_row};
+    wire [9:0] mem_raddr = {pac_col, pac_row};
     wire pac_pre;
     assign pac_pre = mem_rout1; //previously stored value
 
