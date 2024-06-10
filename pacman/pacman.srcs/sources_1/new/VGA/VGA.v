@@ -32,6 +32,7 @@ module vga (
     // Clock in ports
     .clk_in1(clk100_i)      // input clk_in1
    );
+
     
    //horizontal pixel counter
    always @ (posedge vga_clk)
@@ -86,6 +87,7 @@ module vga (
    assign pix_x = vga_pix_x;
    assign pix_y = vga_pix_y;
    output_display_array (
+      .clk_vga(vga_clk),
       .h_sync(vga_hs),
       .v_sync(vga_vs),
       .row(pix_y),

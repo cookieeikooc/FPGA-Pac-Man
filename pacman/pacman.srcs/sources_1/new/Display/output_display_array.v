@@ -2,6 +2,7 @@
 
 module output_display_array (
     input clk,
+    input clk_vga, //74.250 MHz
     input h_sync,
     input v_sync,
     input [9:0] row,
@@ -45,14 +46,23 @@ module output_display_array (
     );
 
     //Read Cache and Scale
-    reg [11:0] rgb[0:64511];
+    (*ram_style = "block"*) reg [11:0] rgb[0:64511];
     always @(posedge clk) begin
         if (board_ready == 1'b1 & row >= 10'd720) begin
             rgb[(24 + board_px_row_counter)*224 + board_px_col_counter] <= board_rgb;
         end
     end
+    reg [11:0] rgb_out;
+    always @(posedge clk_vga) begin
+        if (row < 10'd720 & col < 11'd1280) begin
+            rgb_out <= rgb[row*224 + col];
+        end
+        else begin
+            rgb_out <= 12'h000;
+        end
+    end
 
-    assign rgb_720p = rgb[row*224 + col];
+    assign rgb_720p = rgb_out;
 
 
 endmodule
