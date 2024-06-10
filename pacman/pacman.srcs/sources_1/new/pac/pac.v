@@ -108,8 +108,8 @@ module pac(
     if (mem_wr)
         mem[mem_waddr1] <= mem_wdata1;
 
-    reg mem_sig1 = 1'b1;
-    reg mem_sig2 = 1'b1;
+    wire mem_sig1 = 1'b1;
+    wire mem_sig2 = 1'b1;
     always@(posedge clk) begin
         if (mem_sig1)
             mem_out1 <= mem[mem_raddr1];
