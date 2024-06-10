@@ -36,10 +36,14 @@ module output_display_array (
     end
 
     wire [11:0] board_rgb;
+    wire [9:0] board_px_row;
+    wire [10:0] board_px_col;
+    assign board_px_row = board_px_row_counter;
+    assign board_px_col = board_px_col_counter;
     board_display_cache (
         .clk_cache(clk_cache),
-        .px_row(board_px_row_counter),
-        .px_col(board_px_col_counter),
+        .px_row(board_px_row),
+        .px_col(board_px_col),
         .ready(board_ready),
         .rgb_720p(board_rgb)
     );
