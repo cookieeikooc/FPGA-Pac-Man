@@ -9,7 +9,7 @@ module pacman_ROM (
     output [11:0] rgb
 );
 
-    reg [0:0] ROM [0:5375];
+    reg [0:0] ROM[0:5375];
     initial begin
         $readmemb("pacman_ROM.mem", ROM);
     end
