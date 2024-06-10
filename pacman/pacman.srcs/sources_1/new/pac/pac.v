@@ -104,18 +104,22 @@ module pac(
         score <= score_next;
 
     ///// RAMbehavior here
-    always @(posedge clk)
-    if (mem_wr)
-        mem[mem_waddr1] <= mem_wdata1;
 
+    wire clk_a = clk;
+    wire clk_b = ~clk;
     wire mem_sig1 = 1'b1;
     wire mem_sig2 = 1'b1;
-    always@(posedge clk) begin
+    always@(posedge clk_a) begin
         if (mem_sig1)
             mem_out1 <= mem[mem_raddr1];
+    end
+    always@(posedge clk_b) begin
         if (mem_sig2)
             mem_out2 <= mem[mem_raddr2];
     end
+    always @(posedge clk_a)
+    if (mem_wr)
+        mem[mem_waddr1] <= mem_wdata1;
     //end of NormanHsieh
 
     assign pac_existance = mem_out2;
