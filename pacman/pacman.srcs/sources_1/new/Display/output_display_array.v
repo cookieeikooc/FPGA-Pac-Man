@@ -49,7 +49,7 @@ module output_display_array (
     );
 
     //Read Cache and Scale
-    (*ram_style = "distributed"*) reg [11:0] rgb[0:64511];
+    (*ram_style = "distributed"*) reg [11:0] rgb[0:64511]; //288 * 224
     reg [11:0] rgb_out;
     wire write_en = board_ready == 1'b1 & row >= 10'd720 ? 1'b1 : 1'b0;
     wire read_en = row < 10'd720 & col < 11'd1280 ? 1'b1 : 1'b0;
@@ -59,7 +59,12 @@ module output_display_array (
             rgb[(24 + board_px_row_counter)*224 + board_px_col_counter] <= board_rgb;
         end
         else if (read_en) begin
-            rgb_out <= rgb[row*224 + col];
+            if (row >= 10'd72 & row < 10'd648 & col >= 11'd416 & col < 11'd864) begin
+                rgb_out <= rgb[(row - 10'd72 - row % 2) * 224 + (col - 11'd416 - col % 2)];
+            end
+            else begin
+                rgb_out <= 12'h000;
+            end
         end
         else begin
             rgb_out <= 12'h000;
