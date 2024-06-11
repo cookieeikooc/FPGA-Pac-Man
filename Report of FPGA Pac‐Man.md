@@ -25,7 +25,7 @@ Just two days before the demonstration day, one group member told me that he has
 Even with the new assignment and some tasks discarded, we still cannot present a playable game on screen. The one last piece of the project, PacMan was given four days before due day, I don't have enough time to fix all synthesis errors which had never shown before as I connect all modules together. The synthesis errors and debug details is provided at Synthesis Errors.
 
 ## Modules
-### VGA
+### [VGA](https://github.com/cookieeikooc/FPGA-Pac-Man/blob/main/pacman/pacman.srcs/sources_1/new/VGA/VGA.v)
 **Why We Choose 720p**
 
 Unlike those 4:3 CRT monitor that had been widely used from 70s to early 2000, most of the monitors nowadays are 16:9, and mostly FHD or 4K. Due to the clock speed limit (1080p need the clock speed of 148.5 MHz, Which exceed the 100 MHz clock speed of the FPGA) and limited RAM size, we discover that the 720p (HD) is the most suitable choice for us, since it uses the clock speed at 74.25 MHz.
@@ -56,5 +56,6 @@ The Sync pulse signal only stays low during "Sync Width", and High at other pixe
 ![VGA Sync](https://github.com/cookieeikooc/FPGA-Pac-Man/assets/160454617/c2840560-f624-4a72-9ac0-7cacb09c11a9)
 > Visualize VGA timing and HV sync pulse
 
+### Display RAM
 
 
