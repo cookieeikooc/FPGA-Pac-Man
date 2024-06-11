@@ -25,10 +25,11 @@ Just two days before the demonstration day, one group member told me that he has
 Even with the new assignment and some tasks discarded, we still cannot present a playable game on screen. The one last piece of the project, PacMan was given four days before due day, I don't have enough time to fix all synthesis errors which had never shown before as I connect all modules together. The synthesis errors and debug details is provided at Synthesis Errors.
 
 ## Modules
-### [VGA](https://github.com/cookieeikooc/FPGA-Pac-Man/blob/main/pacman/pacman.srcs/sources_1/new/VGA/VGA.v)
+### VGA
+> See the Verilog [code](https://github.com/cookieeikooc/FPGA-Pac-Man/blob/main/pacman/pacman.srcs/sources_1/new/VGA/VGA.v) here
 **Why We Choose 720p**
 
-Unlike those 4:3 CRT monitor that had been widely used from 70s to early 2000, most of the monitors nowadays are 16:9, and mostly FHD or 4K. Due to the clock speed limit (1080p need the clock speed of 148.5 MHz, Which exceed the 100 MHz clock speed of the FPGA) and limited RAM size, we discover that the 720p (HD) is the most suitable choice for us, since it uses the clock speed at 74.25 MHz.
+Unlike those 4:3 CRT monitors that had been widely used from 70s to early 2000, most of the monitors nowadays are 16:9, and mostly FHD or 4K. Due to the clock speed limit (1080p needs the clock speed at 148.5 MHz, which exceeds the 100 MHz clock speed of the FPGA) and limited RAM size, we discover that the 720p (HD) is the most suitable choice for us, since it uses the clock speed at 74.25 MHz.
 
 How Does VGA Work
 
@@ -57,5 +58,7 @@ The Sync pulse signal only stays low during "Sync Width", and High at other pixe
 > Visualize VGA timing and HV sync pulse
 
 ### Display RAM
-
+> See the Verilog [code](https://github.com/cookieeikooc/FPGA-Pac-Man/blob/main/pacman/pacman.srcs/sources_1/new/Display/output_display_array.v) here
+**Display Workflow**
+When constructing the structure of display, I immediately realized that the non-active pixels of the display array is not sufficient for the RAM to setup multiple frame, so I decided to design a cache system that precalculating the display output and store it in cache even during the active time, and the display RAM will load data in the cache during non-active peroid. 
 
