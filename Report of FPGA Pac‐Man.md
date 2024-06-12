@@ -215,3 +215,11 @@ After few hours of trails and discussions, he suggested that "how about setting 
 
 # Conclusion
 We use the knowledge we've learn in logic design and digital LAB, and information online to develop this project. Although the result isn't what I've expected, the value of the design process is priceless. I've learned how to prompt chatGPT to generate Verilog code with as few errors as possible (the structures it provided were mostly right), and using Github copilot to help me with the RTL project. I also enhanced my skill of coding in Verilog. With the courses and the discussion with former engineer, I've learned more about FPGA, RAM style coding, how synthesis works and trouble shooting methods. Unlike most of the software languages, the way that I have to have clear circuit layout in my mind when using Verilog just feels right to me. I also learned that I have to setup clear deadline and uses time tracking tool to help me keeping track of group members progress. For now the project is stranded because the remaining synthesis error that Vivado located a line that doesn't exist. 
+
+__________
+Full [Repository](https://github.com/cookieeikooc/FPGA-Pac-Man/tree/main)
+
+Members and Logs:
+- [李秉諭 112511033](https://github.com/cookieeikooc/FPGA-Pac-Man/blob/main/bing_log.md)
+- [劉秀勇 112511229](https://github.com/cookieeikooc/FPGA-Pac-Man/blob/main/lawxiuyong_Yong_work_diary.txt)
+- 李和謙 (no Log file attatched)
