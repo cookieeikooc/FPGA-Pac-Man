@@ -1,3 +1,5 @@
+劉秀勇
+
 5/13
 Video Timing of VGA is studied.
 Reference: https://projectf.io/posts/video-timings-vga-720p-1080p/#hd-1280x720-60-hz
