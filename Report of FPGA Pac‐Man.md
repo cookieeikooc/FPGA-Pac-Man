@@ -1,6 +1,6 @@
 > Having best reading experience using Github dark theme - Bing Yu Li
 # Introduction
-You may not heard of this name, but you must have seen this game before. A Yellow PacMan eating dots, and four ghosts chasing after, with the signature "Wakka wakka" sound. Pac-Man is one of the most famous and best-selling video game in history. Pac-Man first appeared in 1980, Japan, as an arcade game. As the game started it's journey in America, it quickly went viral across the states, and became the most popular game in the 80s. We are now trying to simulate the original 80s arcade version of Pac-Man on the Nexys 4 DDR, which is a development board using the Artix-7™ FPGA from Xilinx®. The whole development process is very tough. With irresponsible and unproductive group members, it's barely possible to make every thing done all by myself, even though I've put all my effort, sacrificing my sleep time and my mental health.
+You may not heard of this name, but you must have seen this game before. A Yellow PacMan eating dots, and four ghosts chasing after, with the signature "Wakka wakka" sound. Pac-Man is one of the most famous and best-selling video game in history. Pac-Man first appeared in 1980, Japan, as an arcade game. As the game started it's journey in America, it quickly went viral across the states, and became the most popular game in the 80s. We are now trying to simulate the original 80s arcade version of Pac-Man on the Nexys 4 DDR, which is a development board using the Artix-7™ FPGA from Xilinx®. The whole development process is very tough. Although we cannot successfully eliminate all synthesis errors, the mechanism of this project is well designed.
 
 # Design Process
 ## Materials
@@ -14,7 +14,7 @@ Software:
 - [Xcode](https://developer.apple.com/xcode/) (C++ for data management)
 
 ## Work Assignment and Design Structure
-Just two days before the demonstration day, one group member told me that he hasn't finish the code (only half finished), and the other said that he has done nothing on the last day. I have to reassign the whole process and pick up some of the undone tasks, contacting the TA for overdue request. Eventually a group member just disappear and the task was left undone though I've tried to cover up all their tasks. The design structures and the work assignment of the project is shown below:
+We reassign the whole process and discard some of the undone tasks because of the progress issue. Eventually a group member just disappear and the task was left undone. The design structures and the work assignment of the project is shown below:
 
 ![original design structures](https://github.com/cookieeikooc/FPGA-Pac-Man/assets/160454617/9e7d9567-fc3e-43dc-aa58-98fca87ce2da)
 > Original
@@ -22,7 +22,7 @@ Just two days before the demonstration day, one group member told me that he has
 ![reassigned design structures](https://github.com/cookieeikooc/FPGA-Pac-Man/assets/160454617/53d25ec1-ac90-442e-b6d0-9735f26b206a)
 > Reassigned
 
-Even with the new assignment and some tasks discarded, we still cannot present a playable game on screen. The one last piece of the project, PacMan was given four days before due day, I don't have enough time to fix all synthesis errors which had never shown before as I connect all modules together. The synthesis errors and debug details is provided at Synthesis Errors.
+Even with the new assignment and some tasks discarded, we still cannot present a playable game on screen. The one last piece of the project, PacMan was given four days before due day, we don't have enough time to fix all synthesis errors which had never shown before as we connect all modules together. The synthesis errors and debug details is provided below.
 
 ## Modules
 ### VGA
@@ -214,7 +214,7 @@ So I asked a retired engineer for help. He suggest that I can use a memory [IP](
 After few hours of trails and discussions, he suggested that "how about setting the bit width to [0:0] instead of nothing", and it works! We found a synthesis bug of Vivado. But now some of the RAMs and ROMs still need modification to prompt Vivado to synthesize RAM but registers, and it's a big change. Unfortunately I don't have enough time to get every file changed, and another synthesis error still remains. It even located a line in my [code]((https://github.com/cookieeikooc/FPGA-Pac-Man/blob/main/pacman/pacman.srcs/sources_1/new/Display/output_display_array.v)) that doesn't even exist. 
 
 # Conclusion
-We use the knowledge we've learn in logic design and digital LAB, and information online to develop this project. Although the result isn't what I've expected, the value of the design process is priceless. I've learned how to prompt chatGPT to generate Verilog code with as few errors as possible (the structures it provided were mostly right), and using Github copilot to help me with the RTL project. I also enhanced my skill of coding in Verilog. With the courses and the discussion with former engineer, I've learned more about FPGA, RAM style coding, how synthesis works and trouble shooting methods. Unlike most of the software languages, the way that I have to have clear circuit layout in my mind when using Verilog just feels right to me. I also learned that I have to setup clear deadline and uses time tracking tool to help me keeping track of group members progress. For now the project is stranded because the remaining synthesis error that Vivado located a line that doesn't exist. 
+We use the knowledge we've learn in logic design and digital LAB, and information online to develop this project. Although the result isn't what we've expected, the value of the design process is priceless. we've learned how to prompt chatGPT to generate Verilog code with as few errors as possible (the structures it provided were mostly right), and using Github copilot to help me with the RTL project. We also enhanced our skills of coding in Verilog. With the courses and the discussion with former engineer, we've learned more about FPGA, RAM style coding, how synthesis works and trouble shooting methods. Unlike most of the software languages, the way that I have to have clear circuit layout in my mind when using Verilog just feels right to me. I also learned that I have to setup clear deadline and uses time tracking tool to help me keeping track of group members progress. For now the project is stranded because the remaining synthesis error that Vivado located a line that doesn't exist. 
 
 __________
 Full [Repository](https://github.com/cookieeikooc/FPGA-Pac-Man/tree/main)
