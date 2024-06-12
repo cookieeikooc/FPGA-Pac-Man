@@ -1,0 +1,24 @@
+5/13
+Video Timing of VGA is studied.
+Reference: https://projectf.io/posts/video-timings-vga-720p-1080p/#hd-1280x720-60-hz
+
+5/14
+Verilog code of the VGA with resolution 640x480 is coded.
+Reference:
+1. https://www.youtube.com/watch?v=4enWoVHCykI&list=WL&index=99
+2. https://github.com/MJoergen/nexys4ddr
+
+5/20
+VGA with resolution 640x480 is tested successfully.
+
+5/22
+Verilog code of the VGA with resolution 1280x720 is coded but test failed.
+Reference: 
+1. https://glenwing.github.io/docs/VESA-DMT-1.13.pdf
+2. https://www.youtube.com/watch?v=ngkpvMaNapA (Vivado's Clocking Wizard is used)
+
+5/29
+Verilog code of the VGA with resolution 1280x720 are fixed and tested successfully. The monitor can detect the signal from the FPGA board with 1280x720 resolution.
+
+5/30
+VGA output white screen with resolution 1280x720 successfully.
